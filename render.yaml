@@ -1,11 +1,11 @@
 services:
   - type: web
     plan: free
-    name: Digital-Rename-Bot
+    name: Trinity-File-Renamer
     env: python
     buildCommand: pip install -r requirements.txt
     startCommand: python3 bot.py
-    repo: https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot.git
+    repo: https://github.com/Trinity-Mods
     branch: main
     autoDeploy: false
     envVars:
