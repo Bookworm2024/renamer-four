@@ -1,63 +1,10 @@
-#  Telegram MTProto API Client Library for Pyrogram
-#  Copyright (C) 2017-present DigitalBotz <https://github.com/Chamindu-Gayanuka>
-#  I am a telegram bot, I created it using pyrogram library. https://github.com/pyrogram
-"""
-Apache License 2.0
-Copyright (c) 2022 @Digital_Botz
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Telegram Link : https://t.me/GwitcherG
-Repo Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot
-License Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot/blob/main/LICENSE
-"""
-
-__name__ = "Digital-Rename-Bot"
+__name__ = "Trinity-File-Renamer"
 __version__ = "V4.0"
 __license__ = " Apache License, Version 2.0"
-__copyright__ = "Copyright (C) 2022-present Digital Botz <https://github.com/Chamindu-Gayanuka>"
-__programer__ = "<a href=https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot>Chamindu-Gayanuka</a>"
+__copyright__ = "Copyright (C) 2022-present Trinity Mods <https://github.com/Trinity-Mods>"
+__programer__ = "<a href=https://github.com/Trinity-Mods>Trinity Mods</a>"
 __library__ = "<a href=https://github.com/pyrogram>Pyrogram</a>"
 __language__ = "<a href=https://www.python.org/>Python 3</a>"
 __database__ = "<a href=https://cloud.mongodb.com/>MongoDB</a>"
-__developer__ = "<a href=https://t.me/GwitcherG>Chamindu-Gayanuka</a>"
-__maindeveloper__ = "<a href=https://t.me/Digital_Botz>RknDeveloper</a>"
-
-# main copyright herders (©️)
-# I have been working on this repo since 2022
-
-
-# main working files 
-# - bot.py
-# - web_support.py
-# - plugins/
-# - start_&_cb.py
-# - Force_Sub.py
-# - admin_panel.py
-# - file_rename.py
-# - metadata.py
-# - prefix_&_suffix.py
-# - thumb_&_cap.py
-# - config.py
-# - utils.py
-# - database.py
-
-# bot run files
-# - bot.py
-# - Procfile
-# - Dockerfile
-# - requirements.txt
-# - runtime.txt
+__developer__ = "<a href=https://t.me/the_universal_being>Ser Arthur Dayne</a>"
+__maindeveloper__ = "<a href=https://t.me/trinityXmods>Trinity Mods</a>"
