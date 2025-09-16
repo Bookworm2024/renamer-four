@@ -191,10 +191,13 @@ The source code will be made available soon on our official channels:
 📥 For help, join: <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a>
 """
     
-    RKN_PROGRESS = """<b>╭━━━━❰ TFR PROCESSING... ❱━➣
+    RKN_PROGRESS = """<b>
+⚡ TFR is working...
+{0}
+╭━━━━━━━━━━━━━━━➣
 ┣⪼ 🗃️ Size  : {1} | {2}
-┣⪼ ⏳️ Done  : {0}%
-┣⪼ 🚀 Speed : {3}/s
-┣⪼ ⏰️ ETA   : {4}
+┣⪼ ⏳ Done  : {3}%
+┣⪼ 🚀 Speed : {4}/s
+┣⪼ ⏰ ETA   : {5}
 ╰━━━━━━━━━━━━━━━➣
 </b>"""
