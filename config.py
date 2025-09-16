@@ -3,9 +3,9 @@ id_pattern = re.compile(r'^.\d+$')
 
 class Config(object):
     # digital_botz client config
-    API_ID = os.environ.get("API_ID", "")
-    API_HASH = os.environ.get("API_HASH", "")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
+    API_ID = os.environ.get("API_ID", "21145186")
+    API_HASH = os.environ.get("API_HASH", "daa53f4216112ad22b8a8f6299936a46")
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "7681830527:AAEuFg9tPQ2kpSxBbOymrO0zyasRIn3gQ78") 
 
     # premium account string session required 😢 
     STRING_SESSION = os.environ.get("STRING_SESSION", "")
