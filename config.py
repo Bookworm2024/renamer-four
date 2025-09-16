@@ -192,15 +192,11 @@ The source code will be made available soon on our official channels:
 """
     
     RKN_PROGRESS = """<b>
-⚡ TFR is working...
 
 {0}
 
-╭━━━━━━━━━━━━━━━➣
-┣⪼ 🗃️ Size  : {1} | {2}
-┣⪼ ⏳ Done  : {3}%
-┣⪼ 🚀 Speed : {4}/s
-┣⪼ ⏰ ETA   : {5}
-╰━━━━━━━━━━━━━━━➣
-</b>"""
+❁ 🗃️ Size  : {1} | {2}
+❁ ⏳ Done  : {3}%
+❁ 🚀 Speed : {4}/s
+❁ ⏰ ETA   : {5}</b>"""
 
