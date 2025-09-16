@@ -8,16 +8,16 @@ class Config(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "7681830527:AAEuFg9tPQ2kpSxBbOymrO0zyasRIn3gQ78") 
 
     # premium account string session required 😢 
-    STRING_SESSION = os.environ.get("STRING_SESSION", "")
+    STRING_SESSION = os.environ.get("STRING_SESSION", "1BVtsOG4Bu2Q3VoPZHzBASNfD0OM_Toi5exK-YQgf1RjQP8pM_RHs9upLLpQ3pMhLqJE9QMCzkVms8_TQcke9TQWADdUrE7sfjfEODfg42i8LYbZlsMIhRM1aUbyOwssC8gPzpufeLAQtMnwJYnt0wek-UvARkrxc1FTpBHbfpqQlSc1fkOB3Mf3DMljwQNgGW4ZWbV7zszD8SDXVxkvt1RkO0FXKpNnaOZSx5X3cX9PdhLOb-vgV_ezxt4AGW1-HKyeaNWZmSqs8l6EFjBuZSLbfqsdgQ8LE3GCggye6HMAIjOW3DT9SWZLRyzeO_sSTAKHHXhSCUP07AydRJdL26Chzl1js-Vc=")
     
     # database config
-    DB_NAME = os.environ.get("DB_NAME","Cluster0")
-    DB_URL = os.environ.get("DB_URL","")
+    DB_NAME = os.environ.get("DB_NAME","hornokplease")
+    DB_URL = os.environ.get("DB_URL","mongodb+srv://infohubstore06_db_user:mLmx8kKMaj7mRZnF@hornokplease.osclnkh.mongodb.net/?retryWrites=true&w=majority&appName=hornokplease")
  
     # other configs
-    START_PIC = os.environ.get("START_PIC", "https://telegra.ph/file/eb80582fa42f9bd412085.jpg")
-    ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '1087141176').split()]
-    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1001778606534"))
+    START_PIC = os.environ.get("START_PIC", "https://t.me/trinitypics/13")
+    ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '6011680723').split()]
+    LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002495227151"))
 
     # free upload limit 
     FREE_UPLOAD_LIMIT = 10737418240  # 10 GB = 10 * 1024 * 1024 * 1024
@@ -30,7 +30,7 @@ class Config(object):
     try:
         FORCE_SUB = int(os.environ.get("FORCE_SUB", "")) 
     except:
-        FORCE_SUB = os.environ.get("FORCE_SUB", "Unlimited_Movie_Zone")
+        FORCE_SUB = os.environ.get("FORCE_SUB", "trinityXmods")
         
     # wes response configuration     
     PORT = int(os.environ.get("PORT", "8080"))
@@ -38,155 +38,163 @@ class Config(object):
 
 class rkn(object):
     # part of text configuration
-    START_TXT = """<b>Hi, {}👋
+    START_TXT = """<b>Hi, {} 👋
 
-This Is Advanced And Powerful File Renamer Bot 🤖
-Using This Bot You Can Rename & Change Thumbnail Of Your File 📁
-You Can Also Convert Video To File & File To Video 🎞️
-This Bot Also Support Custom Caption & Metadata 📑
+Welcome to the Advanced & Powerful File Renamer Bot 🤖  
+✨ With this bot you can:
+• Rename files easily 📁  
+• Change or add custom thumbnails 🖼️  
+• Convert videos to files & files to videos 🎞️  
+• Add custom captions & metadata 📑  
 
-This Bot Was Created By : <a href=https://t.me/GwitcherG>Chamindu-Gayanuka💞</a></b>"""
+🔹 Developed with ❤️ by <a href="https://t.me/trinityXmods">Trinity Mods</a></b>"""
 
-    ABOUT_TXT = """<b>╭───────────⍟
+    ABOUT_TXT = """ <b>╭───────────⍟
 ├🤖 My Name    : {}
 ├🖥️ Developers : {}
 ├👨‍💻 Programmer : {}
 ├📕 Library    : {}
 ├✏️ Language   : {}
 ├💾 Data Base  : {}
-├📊 Version    : <a href=https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot>{}</a></b>     
-╰───────────────⍟ """
+├📊 Version    : <a href="https://t.me/trinityXmods">{}</a>
+╰───────────────⍟</b> """
 
-    HELP_TXT = """
-<b>•></b> /Start The Bot.
+    HELP_TXT = """<b>📌 How to Use the Bot</b>
 
-✏️ <b><u>How to Rename a File</u></b>
-<b>•></b> Send Any File And Type New File Name \nAnd Select The Format [ document, video, audio ].           
-ℹ️ 𝗔𝗻𝘆 𝗢𝘁𝗵𝗲𝗿 𝗛𝗲𝗹𝗽 𝗖𝗼𝗻𝘁𝗮𝗰𝘁 :- <a href=https://t.me/Unlimited_Movie_Zone>𝑺𝑼𝑷𝑷𝑶𝑹𝑻 𝑮𝑹𝑶𝑼𝑷</a>
-"""
+<b>•</b> Use <code>/start</code> to begin 🤖  
 
-    UPGRADE_PREMIUM= """
-•⪼ ★𝘗𝘭𝘢𝘯𝘴    -  ⏳𝘋𝘢𝘵𝘦 - 💸𝘗𝘳𝘪𝘤𝘦 
-•⪼ 🥉𝘉𝘳𝘰𝘯𝘻𝘦  -   3𝘥𝘢𝘺𝘴 -   30
-•⪼ 🥈𝘚𝘪𝘭𝘷𝘦𝘳   -   7𝘥𝘢𝘺𝘴 -   70
-•⪼ 🥇𝘎𝘰𝘭𝘥    -  15𝘥𝘢𝘺𝘴 -  150
-•⪼ 🏆𝘗𝘭𝘢𝘵𝘪𝘯𝘶𝘮 -  1𝘮𝘰𝘯𝘵𝘩 -  300
-•⪼ 💎𝘋𝘪𝘢𝘮𝘰𝘯𝘥 -  2𝘮𝘰𝘯𝘵𝘩 -  600
+✏️ <b><u>How to Rename a File</u></b>  
+<b>•</b> Send any file to the bot  
+<b>•</b> Enter the new file name  
+<b>•</b> Choose the format → Document 📄 | Video 🎞️ | Audio 🎵  
 
-- 𝘋𝘢𝘪𝘭𝘺 𝘜𝘱𝘭𝘰𝘢𝘥 𝘓𝘪𝘮𝘪𝘵 𝘜𝘯𝘭𝘪𝘮𝘪𝘵𝘦𝘥
-- 𝘋𝘪𝘴𝘤𝘰𝘶𝘯𝘵 𝘈𝘭𝘭 𝘗𝘭𝘢𝘯 10%
-    """
+ℹ️ For help, contact <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a> 💬"""
+
+    UPGRADE_PREMIUM= """<b>💎 Premium Plans</b>  
+
+<b>•⪼ Plan ★ Duration ⏳ Price 💸</b>  
+🥉 <b>Bronze</b>   – 3 Days   – 30  
+🥈 <b>Silver</b>   – 7 Days   – 70  
+🥇 <b>Gold</b>     – 15 Days  – 150  
+🏆 <b>Platinum</b> – 1 Month  – 300  
+💎 <b>Diamond</b>  – 2 Months – 600  
+
+<b>✨ Benefits</b>  
+✔ Unlimited Daily Uploads  
+✔ 10% Discount on All Plans"""
     
-    UPGRADE_PLAN= """
-𝘗𝘭𝘢𝘯: 𝘗𝘳𝘰
-𝘋𝘢𝘵𝘦: 1 𝘮𝘰𝘯𝘵𝘩 
-𝘗𝘳𝘪𝘤𝘦: 150
-𝘓𝘪𝘮𝘪𝘵: 100 𝘎𝘉
+    UPGRADE_PLAN= """<b>💎 Available Plans</b>  
 
-𝘗𝘭𝘢𝘯: 𝘜𝘭𝘵𝘢 𝘗𝘳𝘰 
-𝘋𝘢𝘵𝘦: 1 𝘮𝘰𝘯𝘵𝘩 
-𝘗𝘳𝘪𝘤𝘦: 300
-𝘓𝘪𝘮𝘪𝘵: 1000 𝘎𝘉
+📌 <b>Plan:</b> Pro  
+⏳ <b>Duration:</b> 1 Month  
+💸 <b>Price:</b> 150  
+📦 <b>Limit:</b> 100 GB  
 
-- 𝘋𝘪𝘴𝘤𝘰𝘶𝘯𝘵 𝘈𝘭𝘭 𝘗𝘭𝘢𝘯 10%
-    """
+📌 <b>Plan:</b> Ultra Pro  
+⏳ <b>Duration:</b> 1 Month  
+💸 <b>Price:</b> 300  
+📦 <b>Limit:</b> 1000 GB  
+
+✨ <b>Extra Benefit:</b> 10% Discount on All Plans"""
     
-    THUMBNAIL = """
-🌌 <b><u>How to Set Thumbnail</u></b>
+    THUMBNAIL = """🌌 <b><u>How to Set Thumbnail</u></b>  
 
-<b>•></b> Send Any Photo To Set As Thumbnail.
-<b>•></b> /del_thumb Use This Command To Delete Your Current Thumbnail.
-<b>•></b> /view_thumb Use This Command To View Your Current Thumbnail.
-"""
-    CAPTION= """
-📑 <b><u>How to Set Custom Caption</u></b>
-
-<b>•></b> /set_caption - Use This Command To Set Your Custom Caption.
-<b>•></b> /see_caption - Use This Command To See Your Custom Caption.
-<b>•></b> /del_caption - Use This Command To Delete Your Custom Caption.
-
-Example:- `/set_caption 📕 FILE NAME: {filename}
-💾 SIZE: {filesize}
-⏰ DURATION: {duration}`
-"""
-    BOT_STATUS = """
-⚡️ Bot Status ⚡️
-
-⌚️ BOT UPTIME: `{}`
-👭 TOTAL USERS: `{}`
-💸 TOTAL PREMIUM USERS: `{}`
-⏳ UPLOAD: `{}`
-🚀 DOWNLOAD: `{}`
-"""
-    LIVE_STATUS = """
-⚡ LIVE SERVER STATUS ⚡
-
-UPTIME: `{}`
-CPU: `{}%`
-RAM: `{}%` 
-TOTAL DISK: `{}`
-USED SPACE: `{} {}%`
-FREE SPACE: `{}`
-UPLOAD: `{}`
-DOWNLOAD: `{}`
-V3.0.0 [STABLE]
-"""
-    DIGITAL_METADATA = """
-❪ SET CUSTOM METADATA ❫
-
-- /metadata - To Set & Change Your Custom Metadata.
-
-☞ For Example:-
-
-`--change-title @Unlimited_Movie_Zone
---change-video-title @Unlimited_Movie_Zone
---change-audio-title @Unlimited_Movie_Zone
---change-subtitle-title @Unlimited_Movie_Zone
---change-author @Unlimited_Movie_Zone`
-
-📥 For Help Cont. @Unlimited_Movie_Zone
-"""
+📸 <b>•</b> Send any photo to set it as your thumbnail.  
+🗑️ <b>•</b> Use /del_thumb to delete your current thumbnail.  
+👁️ <b>•</b> Use /view_thumb to view your current thumbnail."""
     
-    CUSTOM_FILE_NAME = """
-<u>🖋️ Custom File Name</u>
+    CAPTION= """📑 <b><u>How to Set Custom Caption</u></b>  
 
-you can pre-add a prefix and suffix along with your new filename
+✏️ <b>•</b> <code>/set_caption</code> – Set your custom caption.  
+👁️ <b>•</b> <code>/see_caption</code> – View your current caption.  
+🗑️ <b>•</b> <code>/del_caption</code> – Delete your custom caption.  
 
-➢ /set_prefix - To add a prefix along with your filename.
-➢ /see_prefix - To see your prefix.
-➢ /del_prefix - To delete your prefix.
-➢ /set_suffix - To add a suffix along with your filename.
-➢ /see_suffix - To see your suffix.
-➢ /del_suffix - To delete your suffix.
-
-Example:- `/set_suffix @Unlimited_Movie_Zone`
-Example:- `/set_prefix @Unlimited_Movie_Zone`
-"""
-
-    DEV_TXT = """<b><u>Special Thanks & Developers</b></u>
+<b>📌 Example:</b>  
+<code>/set_caption  
+📕 FILE NAME: {filename}  
+💾 SIZE: {filesize}  
+⏰ DURATION: {duration}</code>"""
     
-» 𝗦𝗢𝗨𝗥𝗖𝗘 𝗖𝗢𝗗𝗘 : <a href=https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot>Digital-Rename-Bot</a>
+    BOT_STATUS = """⚡️ <b>Bot Status</b> ⚡️
 
-• ❣️ <a href=https://github.com/Chamindu-Gayanuka>Chamindu-Gayanuka</a>"""
+⌚️ <b>Uptime:</b> `{}`
+👥 <b>Total Users:</b> `{}`
+💎 <b>Premium Users:</b> `{}`
+⬆️ <b>Upload Speed:</b> `{}`
+⬇️ <b>Download Speed:</b> `{}`
+"""
+    LIVE_STATUS = """⚡ <b>LIVE SERVER STATUS</b> ⚡
 
-    SEND_METADATA = """
-❪ SET CUSTOM METADATA ❫
+⌚️ <b>Uptime:</b> `{}`
+🖥️ <b>CPU Usage:</b> `{}%`
+💾 <b>RAM Usage:</b> `{}%`
+🗄️ <b>Total Disk:</b> `{}`
+📂 <b>Used Space:</b> `{} ({}%)`
+📤 <b>Free Space:</b> `{}`
+⬆️ <b>Upload Speed:</b> `{}`
+⬇️ <b>Download Speed:</b> `{}`
+🔖 <b>Version:</b> V3.0.0 [STABLE]
+"""
+    DIGITAL_METADATA = """❪ <b>SET CUSTOM METADATA</b> ❫
 
-☞ For Example:-
+🔹 <b>Command:</b> /metadata  
+Use this to set or change your custom metadata easily.
 
-`--change-title @Unlimited_Movie_Zone
---change-video-title @Unlimited_Movie_Zone
---change-audio-title @Unlimited_Movie_Zone
---change-subtitle-title @Unlimited_Movie_Zone
---change-author @Unlimited_Movie_Zone`
+💡 <b>Examples:</b>
+`--change-title @trinityXmods`  
+`--change-video-title @trinityXmods`  
+`--change-audio-title @trinityXmods`  
+`--change-subtitle-title @trinityXmods`  
+`--change-author @trinityXmods`
 
-📥 For Help Cont. @Unlimited_Movie_Zone
+📥 For help, join the group: <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a>
 """
     
-    RKN_PROGRESS = """<b>\n
-╭━━━━❰RENAME PROCESSING...❱━➣
+    CUSTOM_FILE_NAME = """<u>🖋️ Custom File Name</u>
+
+You can pre-add a prefix or suffix along with your new filename.
+
+➢ /set_prefix - Add a prefix to your filename  
+➢ /see_prefix - View your current prefix  
+➢ /del_prefix - Delete your prefix  
+
+➢ /set_suffix - Add a suffix to your filename  
+➢ /see_suffix - View your current suffix  
+➢ /del_suffix - Delete your suffix  
+
+💡 Examples:  
+`/set_prefix @trinityXmods`  
+`/set_suffix @trinityXmods`  
+
+📥 For help, join: <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a>
+"""
+
+    DEV_TXT = """<b><u>Special Thanks & Developers</u></b>
+
+• ❣️ Developer: @trinityXmods
+
+The source code will be made available soon on our official channels:
+
+📢 Telegram: <a href="https://t.me/trinityXmods">Trinity Mods</a>  
+💻 GitHub: <a href="https://github.com/Trinity-Mods">Trinity-Mods</a>
+"""
+
+    SEND_METADATA = """❪ <b>SET CUSTOM METADATA</b> ❫
+
+💡 <b>Examples:</b>
+`--change-title @trinityXmods`  
+`--change-video-title @trinityXmods`  
+`--change-audio-title @trinityXmods`  
+`--change-subtitle-title @trinityXmods`  
+`--change-author @trinityXmods`
+
+📥 For help, join: <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a>
+"""
+    
+    RKN_PROGRESS = """<b>╭━━━━❰ TFR PROCESSING... ❱━➣
 ┣⪼ 🗃️ Size  : {1} | {2}
 ┣⪼ ⏳️ Done  : {0}%
 ┣⪼ 🚀 Speed : {3}/s
 ┣⪼ ⏰️ ETA   : {4}
-╰━━━━━━━━━━━━━━━➣ </b>"""
+╰━━━━━━━━━━━━━━━➣
+</b>"""
