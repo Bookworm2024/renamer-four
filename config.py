@@ -12,7 +12,7 @@ class Config(object):
     
     # database config
     DB_NAME = os.environ.get("DB_NAME","hornokplease")
-    DB_URL = os.environ.get("DB_URL","mongodb+srv://infohubstore06_db_user:mLmx8kKMaj7mRZnF@hornokplease.osclnkh.mongodb.net/?retryWrites=true&w=majority&appName=hornokplease")
+    DB_URL = os.environ.get("DB_URL","")
  
     # other configs
     START_PIC = os.environ.get("START_PIC", "https://t.me/trinitypics/13")
