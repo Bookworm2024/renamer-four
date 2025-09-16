@@ -1,27 +1,3 @@
-"""
-Apache License 2.0
-Copyright (c) 2022 @Digital_Botz
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Telegram Link : https://t.me/GwitcherG
-Repo Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot
-License Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot/blob/main/LICENSE
-"""
-
 # pyrogram imports
 from pyrogram import Client, filters
 from pyrogram.enums import MessageMediaType
@@ -45,8 +21,8 @@ from asyncio import sleep
 import os, time, asyncio
 
 
-UPLOAD_TEXT = """Uploading Started...."""
-DOWNLOAD_TEXT = """Download Started..."""
+UPLOAD_TEXT = """Uploading..."""
+DOWNLOAD_TEXT = """Downloading..."""
 
 app = Client(
     name="4gb_FileRenameBot",
@@ -108,7 +84,7 @@ async def rename_start(client, message):
 
         try:
             await message.reply_text(
-            text=f"**__Media Info:\n\n◈ ᴏʟᴅ File Name: `{filename}`\n\n◈ Extension: `{extension_type.upper()}`\n◈ File Size: `{filesize}`\n◈ Mime Type: `{mime_type}`\n◈ DC ID: `{dcid}`\n\nPlease Enter The New Filename With Extension And Reply This Message....__**",
+            text=f"**__Media Info:\n\n◈ Old File Name: `{filename}`\n\n◈ Extension: `{extension_type.upper()}`\n◈ File Size: `{filesize}`\n◈ Mime Type: `{mime_type}`\n◈ DC ID: `{dcid}`\n\nPlease Enter The New Filename With Extension And Reply This Message....__**",
 	    reply_to_message_id=message.id,  
 	    reply_markup=ForceReply(True)
         )       
@@ -116,7 +92,7 @@ async def rename_start(client, message):
         except FloodWait as e:
             await sleep(e.value)
             await message.reply_text(
-            text=f"**__Media Info:\n\n◈ ᴏʟᴅ File Name: `{filename}`\n\n◈ Extension: `{extension_type.upper()}`\n◈ File Size: `{filesize}`\n◈ Mime Type: `{mime_type}`\n◈ DC ID: `{dcid}`\n\nPlease Enter The New Filename With Extension And Reply This Message....__**",
+            text=f"**__Media Info:\n\n◈ Old File Name: `{filename}`\n\n◈ Extension: `{extension_type.upper()}`\n◈ File Size: `{filesize}`\n◈ Mime Type: `{mime_type}`\n◈ DC ID: `{dcid}`\n\nPlease Enter The New Filename With Extension And Reply This Message....__**",
 	    reply_to_message_id=message.id,  
 	    reply_markup=ForceReply(True)
         )
@@ -172,7 +148,7 @@ async def doc(bot, update):
         suffix = await digital_botz.get_suffix(user_id)
         new_filename = add_prefix_suffix(new_filename_, prefix, suffix)
     except Exception as e:
-        return await rkn_processing.edit(f"⚠️ Something went wrong can't able to set Prefix or Suffix ☹️ \n\n❄️ Contact My Creator -> @GwitcherG\nError: {e}")
+        return await rkn_processing.edit(f"⚠️ Something went wrong. I am unable to change suffix/prefix at the moment. Please try again later. If the issue persists, please contact support - https://t.me/+iV0nZk2DK9w0MDA1\nError: {e}")
 
     # msg file location 
     file = update.message.reply_to_message
@@ -207,9 +183,9 @@ async def doc(bot, update):
             if change_metadata(dl_path, metadata_path, metadata):            
                 await rkn_processing.edit("Metadata Added.....")
                 print("Metadata Added.....")
-        await rkn_processing.edit("**Metadata added to the file successfully ✅**\n\n**Trying To Uploading....**")
+        await rkn_processing.edit("**Metadata added to the file successfully ✅**\n\n**Uploading...**")
     else:
-        await rkn_processing.edit("`Try To Uploading....`")
+        await rkn_processing.edit("`Uploading...`")
 	    
     duration = 0
     try:
@@ -339,4 +315,4 @@ async def doc(bot, update):
 # please give credit 🙏🥲
 		    
     await remove_path(ph_path, file_path, dl_path, metadata_path)
-    return await rkn_processing.edit("Uploaded Successfully....")
+    return await rkn_processing.edit("Uploaded successfully!")
