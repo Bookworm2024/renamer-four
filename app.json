@@ -1,9 +1,9 @@
 {
-    "name": "Digital Rename Bot",
+    "name": "Trinity File Renamer",
     "description": "Telegram File Renamer Bot ",
-    "logo": "https://telegra.ph/file/eb80582fa42f9bd412085.jpg",
+    "logo": "https://t.me/trinitypics/13",
     "keywords": ["Renamer Bot", "Mongo DB"],    
-    "repository": "https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot",
+    "repository": "https://github.com/Trinity-Mods",
     "env": {
         "API_ID": {
             "description": "Your APP ID From my.telegram.org ",
@@ -41,7 +41,7 @@
         },
         "START_PIC": {
             "description": "Your Bot start cmd Pic",
-            "value": "https://telegra.ph/file/b746aadfe59959eb76f59.jpg",
+            "value": "https://t.me/trinitypics/13",
             "required": false
         },
         "STRING_SESSION": {
