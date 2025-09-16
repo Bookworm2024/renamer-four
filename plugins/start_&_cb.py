@@ -1,27 +1,3 @@
-"""
-Apache License 2.0
-Copyright (c) 2022 @Digital_Botz
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Telegram Link : https://t.me/GwitcherG
-Repo Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot
-License Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot/blob/main/LICENSE
-"""
-
 # extra imports
 import random, asyncio, datetime, pytz, time, psutil, shutil
 
@@ -36,13 +12,13 @@ from helper.utils import humanbytes
 from plugins import __version__ as _bot_version_, __developer__, __database__, __library__, __language__, __programer__
 
 upgrade_button = InlineKeyboardMarkup([[        
-        InlineKeyboardButton('buy premium ✓', user_id=int(1087141176)),
+        InlineKeyboardButton('buy premium ✓', user_id=int(6011680723)),
          ],[
         InlineKeyboardButton("Back", callback_data = "start")
 ]])
 
 upgrade_trial_button = InlineKeyboardMarkup([[        
-        InlineKeyboardButton('buy premium ✓', user_id=int(1087141176)),
+        InlineKeyboardButton('buy premium ✓', user_id=int(6011680723)),
          ],[
         InlineKeyboardButton("Trial - 12 Hours ✓", callback_data = "give_trial"),
         InlineKeyboardButton("Back", callback_data = "start")
@@ -53,8 +29,8 @@ upgrade_trial_button = InlineKeyboardMarkup([[
 @Client.on_message(filters.private & filters.command("start"))
 async def start(client, message):
     start_button = [[        
-        InlineKeyboardButton('Updates', url='https://t.me/Unlimited_Movie_Zone'),
-        InlineKeyboardButton('Support', url='https://t.me/Unlimited_Movie_Zone')
+        InlineKeyboardButton('Updates', url='https://t.me/trinityXmods'),
+        InlineKeyboardButton('Support', url='https://t.me/+iV0nZk2DK9w0MDA1')
         ],[
         InlineKeyboardButton('About', callback_data='about'),
         InlineKeyboardButton('Help', callback_data='help')
@@ -113,7 +89,7 @@ async def myplan(client, message):
             await message.reply_text(text, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Checkout Premium Plans 💸", callback_data='upgrade')]]), quote=True)
 
         else:
-            m=await message.reply_sticker("CAACAgIAAxkBAAIBTGVjQbHuhOiboQsDm35brLGyLQ28AAJ-GgACglXYSXgCrotQHjibHgQ")
+            m=await message.reply_sticker("CAACAgIAAxkBAAK3BmjJhKxZw7k69gqfgtx3OnnGF1DQAAJIAANSiZEjbtkuqJw9TwABNgQ")
             await message.reply_text(f"Hey {user},\n\nYou Do Not Have Any Active Premium Plan, If You Want TO Take Premium Then Click On Below Button 👇",
             reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Checkout Premium Plans 💸", callback_data='upgrade')]]))
             await asyncio.sleep(2)
@@ -142,8 +118,8 @@ async def cb_handler(client, query: CallbackQuery):
     data = query.data 
     if data == "start":
         start_button = [[        
-        InlineKeyboardButton('Updates', url='https://t.me/Unlimited_Movie_Zone'),
-        InlineKeyboardButton('Support', url='https://t.me/Unlimited_Movie_Zone')
+        InlineKeyboardButton('Updates', url='https://t.me/trinityXmods'),
+        InlineKeyboardButton('Support', url='https://t.me/+iV0nZk2DK9w0MDA1')
         ],[
         InlineKeyboardButton('About', callback_data='about'),
         InlineKeyboardButton('Help', callback_data='help')
@@ -290,7 +266,7 @@ async def cb_handler(client, query: CallbackQuery):
             reply_markup=InlineKeyboardMarkup([[
                 #⚠️ don't change source code & source link ⚠️ #
            #Whoever is deploying this repo is given a warning ⚠️ not to remove this repo link #first & last warning ⚠️   
-                InlineKeyboardButton("💞 Source Code 💞", url="https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot")
+                InlineKeyboardButton("UPDATES 🥳", url="https://t.me/trinityXmods")
             ],[
                 InlineKeyboardButton("🔒 Close", callback_data = "close"),
                 InlineKeyboardButton("◀️ Back", callback_data = "start")
