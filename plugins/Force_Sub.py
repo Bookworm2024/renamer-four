@@ -1,27 +1,3 @@
-"""
-Apache License 2.0
-Copyright (c) 2022 @Digital_Botz
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Telegram Link : https://t.me/GwitcherG
-Repo Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot
-License Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot/blob/main/LICENSE
-"""
-
 # pyrogram imports
 from pyrogram import Client, filters, enums 
 from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
@@ -65,7 +41,7 @@ async def _(bot, message):
 @Client.on_message(filters.private & filters.create(not_subscribed))
 async def forces_sub(client, message):
     buttons = [[InlineKeyboardButton(text="📢 Join Update Channel 📢", url=f"https://t.me/{Config.FORCE_SUB}")]] 
-    text = "**Sorry Dude You'Re Not Joined My Channel 😐. So Please Join Our Update Channel To Continue @Unlimited_Movie_Zone**"
+    text = "**Sorry buddy, you did not join our upadate channel yet. To continue further, you need to join our update channel here - @trinityXmods**"
 
     try:
         user = await client.get_chat_member(Config.FORCE_SUB, message.from_user.id)
