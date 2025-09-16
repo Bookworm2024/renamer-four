@@ -2,19 +2,19 @@ import re, os, time
 id_pattern = re.compile(r'^.\d+$') 
 
 class Config(object):
-    # digital_botz client config
+    # trinity mods client configuration
     API_ID = os.environ.get("API_ID", "21145186")
     API_HASH = os.environ.get("API_HASH", "daa53f4216112ad22b8a8f6299936a46")
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
 
-    # premium account string session required 😢 
+    # string session of premium telegram account is required here. avoid if you don't want 4GB+ file size support in your bot.
     STRING_SESSION = os.environ.get("STRING_SESSION", "")
     
-    # database config
+    # database configuration
     DB_NAME = os.environ.get("DB_NAME","hornokplease")
     DB_URL = os.environ.get("DB_URL","")
  
-    # other configs
+    # other configurations
     START_PIC = os.environ.get("START_PIC", "https://t.me/trinitypics/13")
     ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '6011680723').split()]
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002495227151"))
