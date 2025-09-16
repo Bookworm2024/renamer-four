@@ -8,7 +8,7 @@ class Config(object):
     BOT_TOKEN = os.environ.get("BOT_TOKEN", "7681830527:AAEuFg9tPQ2kpSxBbOymrO0zyasRIn3gQ78") 
 
     # premium account string session required 😢 
-    STRING_SESSION = os.environ.get("STRING_SESSION", "")
+    STRING_SESSION = os.environ.get("STRING_SESSION", "1BVtsOG4Bu2Q3VoPZHzBASNfD0OM_Toi5exK-YQgf1RjQP8pM_RHs9upLLpQ3pMhLqJE9QMCzkVms8_TQcke9TQWADdUrE7sfjfEODfg42i8LYbZlsMIhRM1aUbyOwssC8gPzpufeLAQtMnwJYnt0wek-UvARkrxc1FTpBHbfpqQlSc1fkOB3Mf3DMljwQNgGW4ZWbV7zszD8SDXVxkvt1RkO0FXKpNnaOZSx5X3cX9PdhLOb-vgV_ezxt4AGW1-HKyeaNWZmSqs8l6EFjBuZSLbfqsdgQ8LE3GCggye6HMAIjOW3DT9SWZLRyzeO_sSTAKHHXhSCUP07AydRJdL26Chzl1js-Vc")
     
     # database config
     DB_NAME = os.environ.get("DB_NAME","hornokplease")
