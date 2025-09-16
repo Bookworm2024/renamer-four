@@ -22,10 +22,11 @@ async def progress_for_pyrogram(current, total, ud_type, message, start):
         filled_length = int(20 * percentage // 100)
         progress = "●" * filled_length + "○" * (20 - filled_length)
 
-        tmp = f"[{progress}]" + rkn.RKN_PROGRESS.format( 
-            round(percentage, 2),
+        tmp = rkn.RKN_PROGRESS.format( 
+            f"[{progress}]",
             humanbytes(current),
             humanbytes(total),
+            round(percentage, 2),
             humanbytes(speed),            
             estimated_total_time if estimated_total_time != '' else "0 s"
         )
@@ -64,6 +65,7 @@ def TimeFormatter(milliseconds: int) -> str:
         ((str(milliseconds) + "MS, ") if milliseconds else "")
     return tmp[:-2] 
 
+
 def convert(seconds):
     seconds = seconds % (24 * 3600)
     hour = seconds // 3600
@@ -71,6 +73,7 @@ def convert(seconds):
     minutes = seconds // 60
     seconds %= 60      
     return "%d:%02d:%02d" % (hour, minutes, seconds)
+
 
 async def send_log(b, u):
     if Config.LOG_CHANNEL:
@@ -85,6 +88,7 @@ async def send_log(b, u):
             f"By: {b.mention}"
         )
         await b.send_message(Config.LOG_CHANNEL, log_message)
+
 
 async def get_seconds_first(time_string):
     conversion_factors = {
@@ -106,6 +110,7 @@ async def get_seconds_first(time_string):
 
     return total_seconds
 
+
 async def get_seconds(time_string):
     conversion_factors = {
         's': 1,
@@ -125,6 +130,7 @@ async def get_seconds(time_string):
 
     return total_seconds
 
+
 def add_prefix_suffix(input_string, prefix='', suffix=''):
     pattern = r'(?P<filename>.*?)(\.\w+)?$'
     match = re.search(pattern, input_string)
@@ -140,10 +146,12 @@ def add_prefix_suffix(input_string, prefix='', suffix=''):
     else:
         return input_string
 
+
 async def remove_path(*paths):
     for path in paths:
         if path and os.path.lexists(path):
             os.remove(path)
+
 
 def metadata_text(metadata_text):
     author = None
