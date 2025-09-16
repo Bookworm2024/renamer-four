@@ -32,7 +32,7 @@ class Config(object):
     except:
         FORCE_SUB = os.environ.get("FORCE_SUB", "trinityXmods")
         
-    # wes response configuration     
+    # web response configuration     
     PORT = int(os.environ.get("PORT", "8080"))
     BOT_UPTIME = time.time()
 
