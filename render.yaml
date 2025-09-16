@@ -31,4 +31,3 @@ services:
         sync: false
       - key: STRING_SESSION
         sync: false
-      
