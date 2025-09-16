@@ -26,7 +26,7 @@ class Config(object):
     UPLOAD_LIMIT_MODE = True 
     PREMIUM_MODE = True 
     
-    #force subs
+    # force subs
     try:
         FORCE_SUB = int(os.environ.get("FORCE_SUB", "")) 
     except:
@@ -171,7 +171,7 @@ You can pre-add a prefix or suffix along with your new filename.
 
     DEV_TXT = """<b><u>Special Thanks & Developers</u></b>
 
-• ❣️ Developer: @trinityXmods
+• ❣️ <b>Updates Here</b>: @trinityXmods
 
 The source code will be made available soon on our official channels:
 
@@ -197,4 +197,3 @@ The source code will be made available soon on our official channels:
 ❁ ⏳ Done  : {3}%
 ❁ 🚀 Speed : {4}/s
 ❁ ⏰ ETA   : {5}</b>"""
-
