@@ -33,7 +33,7 @@ class Config(object):
         FORCE_SUB = os.environ.get("FORCE_SUB", "trinityXmods")
         
     # web response configuration     
-    PORT = int(os.environ.get("PORT", "8080"))
+    PORT = int(os.environ.get("PORT", "9898"))
     BOT_UPTIME = time.time()
 
 class rkn(object):
