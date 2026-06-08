@@ -2,20 +2,19 @@
 
 ## Supported Versions
 
-Use this section to tell people about which versions of your project are
-currently being supported with security updates.
-
 | Version | Supported          |
 | ------- | ------------------ |
-| 5.1.x   | :white_check_mark: |
-| 5.0.x   | :x:                |
-| 4.0.x   | :white_check_mark: |
-| < 4.0   | :x:                |
+| 5.0.x   | :white_check_mark: |
+| < 5.0   | :x:                |
 
 ## Reporting a Vulnerability
 
-Use this section to tell people how to report a vulnerability.
+Found a security issue? Please **do not** open a public issue.
 
-Tell them where to go, how often they can expect to get an update on a
-reported vulnerability, what to expect if the vulnerability is accepted or
-declined, etc.
+Report it privately to the Trinity Mods team:
+
+- 💬 [Trinity Support](https://t.me/+iV0nZk2DK9w0MDA1)
+- 📢 [@trinityXmods](https://t.me/trinityXmods)
+
+We aim to acknowledge reports within **48 hours** and will keep you updated
+on the fix. Thanks for helping keep Trinity Renamer safe. 🔒
