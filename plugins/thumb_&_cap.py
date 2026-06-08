@@ -1,4 +1,5 @@
 # imports
+import html
 from pyrogram import Client, filters
 from helper.database import digital_botz
 
@@ -34,7 +35,7 @@ async def see_caption(client, message):
     wait = await message.reply_text("<b>⏳ Please wait…</b>")
     caption = await digital_botz.get_caption(message.from_user.id)
     if caption:
-        await wait.edit(f"<b>📝 Your caption:</b>\n\n<code>{caption}</code>")
+        await wait.edit(f"<b>📝 Your caption:</b>\n\n<code>{html.escape(caption)}</code>")
     else:
         await wait.edit("<b>😶 You don't have a caption set.</b>")
 
