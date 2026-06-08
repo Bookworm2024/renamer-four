@@ -1,10 +1,12 @@
+from config import VERSION
+
 __name__ = "Trinity-File-Renamer"
-__version__ = "V4.0"
-__license__ = " Apache License, Version 2.0"
+__version__ = VERSION
+__license__ = "Apache License, Version 2.0"
 __copyright__ = "Copyright (C) 2022-present Trinity Mods <https://github.com/Trinity-Mods>"
-__programer__ = "<a href=https://github.com/Trinity-Mods>Trinity Mods</a>"
-__library__ = "<a href=https://github.com/pyrogram>Pyrogram</a>"
-__language__ = "<a href=https://www.python.org/>Python 3</a>"
-__database__ = "<a href=https://cloud.mongodb.com/>MongoDB</a>"
-__developer__ = "<a href=https://t.me/the_universal_being>Ser Arthur Dayne</a>"
-__maindeveloper__ = "<a href=https://t.me/trinityXmods>Trinity Mods</a>"
+__programer__ = "<a href='https://github.com/Trinity-Mods'>Trinity Mods</a>"
+__library__ = "<a href='https://github.com/pyrogram'>Pyrogram</a>"
+__language__ = "<a href='https://www.python.org/'>Python 3</a>"
+__database__ = "<a href='https://cloud.mongodb.com/'>MongoDB</a>"
+__developer__ = "<a href='https://t.me/the_universal_being'>Ser Arthur Dayne</a>"
+__maindeveloper__ = "<a href='https://t.me/trinityXmods'>Trinity Mods</a>"
