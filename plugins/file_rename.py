@@ -18,7 +18,7 @@ from config import Config
 
 # extra imports
 from asyncio import sleep
-import os, time
+import os, time, html
 
 
 UPLOAD_TEXT = "📤 ᴜᴘʟᴏᴀᴅɪɴɢ ᴛᴏ ᴛᴇʟᴇɢʀᴀᴍ"
@@ -75,12 +75,15 @@ async def rename_start(client, message):
             )
 
     # ── Media info card + ask for new name ──
+    # Escape file-supplied values so names containing < > & don't break HTML parsing.
+    safe_name = html.escape(filename or "Unknown")
+    safe_mime = html.escape(mime_type or "Unknown")
     info_card = (
         f"<b>📂 ꜰɪʟᴇ ʀᴇᴄᴇɪᴠᴇᴅ</b>\n\n"
-        f"<b>📄 Name :</b> <code>{filename}</code>\n"
+        f"<b>📄 Name :</b> <code>{safe_name}</code>\n"
         f"<b>🏷 Type :</b> <code>{extension_type.upper()}</code>\n"
         f"<b>💾 Size :</b> <code>{filesize}</code>\n"
-        f"<b>🧩 Mime :</b> <code>{mime_type}</code>\n"
+        f"<b>🧩 Mime :</b> <code>{safe_mime}</code>\n"
         f"<b>🌐 DC   :</b> <code>{dcid}</code>\n\n"
         f"<b>✏️ Reply to this message with the new file name (include the extension).</b>"
     )
@@ -111,11 +114,9 @@ async def refunc(client, message):
         file = msg.reply_to_message
         media = getattr(file, file.media.value)
 
+        old_name = media.file_name or ""
         if "." not in new_name:
-            if "." in media.file_name:
-                extn = media.file_name.rsplit('.', 1)[-1]
-            else:
-                extn = "mkv"
+            extn = old_name.rsplit('.', 1)[-1] if "." in old_name else "mkv"
             new_name = f"{new_name}.{extn}"
         await reply_message.delete()
 
@@ -126,8 +127,9 @@ async def refunc(client, message):
             button.append([InlineKeyboardButton("🎵 Audio", callback_data="upload_audio")])
 
         # NOTE: the ":-" delimiter is parsed by the upload callback — keep it intact.
+        # Telegram stores the unescaped visible text, so the callback still reads the true name.
         await message.reply(
-            text=f"<b>🎯 ᴄʜᴏᴏsᴇ ᴏᴜᴛᴘᴜᴛ ꜰᴏʀᴍᴀᴛ</b>\n\n<b>• File Name :-</b><code>{new_name}</code>",
+            text=f"<b>🎯 ᴄʜᴏᴏsᴇ ᴏᴜᴛᴘᴜᴛ ꜰᴏʀᴍᴀᴛ</b>\n\n<b>• File Name :-</b><code>{html.escape(new_name)}</code>",
             reply_to_message_id=file.id,
             reply_markup=InlineKeyboardMarkup(button),
         )
@@ -153,7 +155,7 @@ async def doc(bot, update):
         return await rkn_processing.edit(
             "<b>⚠️ Couldn't apply your prefix/suffix.</b>\n"
             "Please try again, or contact <a href='https://t.me/+iV0nZk2DK9w0MDA1'>Trinity Support</a>.\n"
-            f"<code>{e}</code>"
+            f"<code>{html.escape(str(e))}</code>"
         )
 
     file = update.message.reply_to_message
@@ -182,7 +184,7 @@ async def doc(bot, update):
         )
     except Exception as e:
         await refund()
-        return await rkn_processing.edit(f"<b>❌ Download failed:</b> <code>{e}</code>")
+        return await rkn_processing.edit(f"<b>❌ Download failed:</b> <code>{html.escape(str(e))}</code>")
 
     # ── Optional metadata pass ──
     metadata_mode = await digital_botz.get_metadata_mode(user_id)
@@ -220,9 +222,9 @@ async def doc(bot, update):
             )
         except Exception as e:
             await refund()
-            return await rkn_processing.edit(f"<b>⚠️ Caption error:</b> <code>{e}</code>")
+            return await rkn_processing.edit(f"<b>⚠️ Caption error:</b> <code>{html.escape(str(e))}</code>")
     else:
-        caption = f"<b>{new_filename}</b>"
+        caption = f"<b>{html.escape(new_filename)}</b>"
 
     # ── Thumbnail ──
     ph_path = None
@@ -273,7 +275,7 @@ async def doc(bot, update):
     except Exception as e:
         await refund()
         await remove_path(ph_path, file_path, dl_path, metadata_path)
-        return await rkn_processing.edit(f"<b>❌ Upload failed:</b> <code>{e}</code>")
+        return await rkn_processing.edit(f"<b>❌ Upload failed:</b> <code>{html.escape(str(e))}</code>")
 
     await remove_path(ph_path, file_path, dl_path, metadata_path)
     await rkn_processing.edit("<b>✅ Done!</b>  Renamed & delivered by <b>Trinity Mods</b> ⚡")
