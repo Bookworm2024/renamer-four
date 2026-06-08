@@ -1,199 +1,224 @@
 import re, os, time
-id_pattern = re.compile(r'^.\d+$') 
+
+id_pattern = re.compile(r'^.\d+$')
+
+# ─────────────────────────────────────────────
+#            TRINITY MODS · FILE RENAMER
+#                 Core Configuration
+# ─────────────────────────────────────────────
+
+VERSION = "v5.0.0 · Trinity"
+BRAND = "Trinity Mods"
+UPDATES_CHANNEL = "trinityXmods"
+SUPPORT_LINK = "https://t.me/+iV0nZk2DK9w0MDA1"
+UPDATES_LINK = "https://t.me/trinityXmods"
+GITHUB_LINK = "https://github.com/Trinity-Mods"
+OWNER_ID = 6011680723
+
 
 class Config(object):
-    # trinity mods client configuration
+    # ── Telegram client ──
     API_ID = os.environ.get("API_ID", "21145186")
     API_HASH = os.environ.get("API_HASH", "daa53f4216112ad22b8a8f6299936a46")
-    BOT_TOKEN = os.environ.get("BOT_TOKEN", "") 
+    BOT_TOKEN = os.environ.get("BOT_TOKEN", "")
 
-    # string session of premium telegram account is required here. avoid if you don't want 4GB+ file size support in your bot.
+    # Premium TG account string session — required only for 4GB+ uploads.
     STRING_SESSION = os.environ.get("STRING_SESSION", "")
-    
-    # database configuration
-    DB_NAME = os.environ.get("DB_NAME","hornokplease")
-    DB_URL = os.environ.get("DB_URL","")
- 
-    # other configurations
+
+    # ── Database ──
+    DB_NAME = os.environ.get("DB_NAME", "trinity_renamer")
+    DB_URL = os.environ.get("DB_URL", "")
+
+    # ── Branding / misc ──
     START_PIC = os.environ.get("START_PIC", "https://t.me/trinitypics/13")
-    ADMIN = [int(admin) if id_pattern.search(admin) else admin for admin in os.environ.get('ADMIN', '6011680723').split()]
+    ADMIN = [int(admin) if id_pattern.search(admin) else admin
+             for admin in os.environ.get('ADMIN', str(OWNER_ID)).split()]
     LOG_CHANNEL = int(os.environ.get("LOG_CHANNEL", "-1002495227151"))
 
-    # free upload limit 
-    FREE_UPLOAD_LIMIT = 10737418240  # 10 GB = 10 * 1024 * 1024 * 1024
+    # Free daily upload limit (bytes) — 10 GB
+    FREE_UPLOAD_LIMIT = 10 * 1024 * 1024 * 1024
 
-    # premium mode feature ✅
-    UPLOAD_LIMIT_MODE = True 
-    PREMIUM_MODE = True 
-    
-    # force subs
+    # Feature switches
+    UPLOAD_LIMIT_MODE = True
+    PREMIUM_MODE = True
+
+    # Force subscribe channel
     try:
-        FORCE_SUB = int(os.environ.get("FORCE_SUB", "")) 
-    except:
-        FORCE_SUB = os.environ.get("FORCE_SUB", "trinityXmods")
-        
-    # web response configuration     
+        FORCE_SUB = int(os.environ.get("FORCE_SUB", ""))
+    except Exception:
+        FORCE_SUB = os.environ.get("FORCE_SUB", UPDATES_CHANNEL)
+
+    # Web health endpoint
     PORT = int(os.environ.get("PORT", "9898"))
     BOT_UPTIME = time.time()
 
-class rkn(object):
-    # part of text configuration
-    START_TXT = """<b>Hi, {} 👋
+    # Timezone used across the bot
+    TIMEZONE = os.environ.get("TIMEZONE", "Asia/Colombo")
 
-Welcome to the Advanced & Powerful File Renamer Bot 🤖  
-✨ With this bot you can:
-• Rename files easily 📁  
-• Change or add custom thumbnails 🖼️  
-• Convert videos to files & files to videos 🎞️  
-• Add custom captions & metadata 📑  
 
-🔹 Developed with ❤️ by <a href="https://t.me/trinityXmods">Trinity Mods</a></b>"""
+# ─────────────────────────────────────────────
+#            ALL USER-FACING TEXT
+# ─────────────────────────────────────────────
 
-    ABOUT_TXT = """ <b>╭───────────⍟
-├🤖 My Name    : {}
-├🖥️ Developers : {}
-├👨‍💻 Programmer : {}
-├📕 Library    : {}
-├✏️ Language   : {}
-├💾 Data Base  : {}
-├📊 Version    : <a href="https://t.me/trinityXmods">{}</a>
-╰───────────────⍟</b> """
+class Txt(object):
 
-    HELP_TXT = """<b>📌 How to Use the Bot</b>
+    START_TXT = """<b>ʜᴇʏ {} 👋</b>
 
-<b>•</b> Use <code>/start</code> to begin 🤖  
+I'm <b>Trinity Renamer</b> — a blazing-fast file engine built by <a href="https://t.me/trinityXmods">Trinity Mods</a>. ⚡
 
-✏️ <b><u>How to Rename a File</u></b>  
-<b>•</b> Send any file to the bot  
-<b>•</b> Enter the new file name  
-<b>•</b> Choose the format → Document 📄 | Video 🎞️ | Audio 🎵  
+<b>Here's what I can do for you:</b>
+›  📂  Rename any file in seconds
+›  🖼  Attach a permanent custom thumbnail
+›  🎞  Swap between Document · Video · Audio
+›  📝  Set custom captions & metadata
+›  🏷  Auto-add a prefix / suffix
 
-ℹ️ For help, contact <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a> 💬"""
+<b>Just send me a file to begin.</b> 🚀"""
 
-    UPGRADE_PREMIUM= """<b>💎 Premium Plans</b>  
+    ABOUT_TXT = """<b>╭─❰ ⚙️ ᴀʙᴏᴜᴛ ᴍᴇ ❱</b>
+<b>│</b>
+<b>├ 🤖 Bot      :</b> {}
+<b>├ 👑 Owner    :</b> {}
+<b>├ 🧑‍💻 Dev      :</b> {}
+<b>├ 📚 Library  :</b> {}
+<b>├ ✏️ Language :</b> {}
+<b>├ 🗄 Database :</b> {}
+<b>├ 🔖 Version  :</b> <a href="https://t.me/trinityXmods">{}</a>
+<b>│</b>
+<b>╰─❰ Powered by Trinity Mods ❱</b>"""
 
-<b>•⪼ Plan ★ Duration ⏳ Price 💸</b>  
-🥉 <b>Bronze</b>   – 3 Days   – 30  
-🥈 <b>Silver</b>   – 7 Days   – 70  
-🥇 <b>Gold</b>     – 15 Days  – 150  
-🏆 <b>Platinum</b> – 1 Month  – 300  
-💎 <b>Diamond</b>  – 2 Months – 600  
+    HELP_TXT = """<b>📖 ᴛʀɪɴɪᴛʏ ʀᴇɴᴀᴍᴇʀ — ɢᴜɪᴅᴇ</b>
 
-<b>✨ Benefits</b>  
-✔ Unlimited Daily Uploads  
-✔ 10% Discount on All Plans"""
-    
-    UPGRADE_PLAN= """<b>💎 Available Plans</b>  
+<b>How renaming works:</b>
+<b>1.</b>  Send me any file 📂
+<b>2.</b>  Reply with the new name <i>(with extension)</i>
+<b>3.</b>  Pick the output → 📄 Document · 🎞 Video · 🎵 Audio
 
-📌 <b>Plan:</b> Pro  
-⏳ <b>Duration:</b> 1 Month  
-💸 <b>Price:</b> 150  
-📦 <b>Limit:</b> 100 GB  
+Tap a button below to explore each feature 👇
 
-📌 <b>Plan:</b> Ultra Pro  
-⏳ <b>Duration:</b> 1 Month  
-💸 <b>Price:</b> 300  
-📦 <b>Limit:</b> 1000 GB  
+<i>Need a hand? Join</i> <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Support</a> 💬"""
 
-✨ <b>Extra Benefit:</b> 10% Discount on All Plans"""
-    
-    THUMBNAIL = """🌌 <b><u>How to Set Thumbnail</u></b>  
+    UPGRADE_PREMIUM = """<b>💎 ᴛʀɪɴɪᴛʏ ᴘʀᴇᴍɪᴜᴍ</b>
 
-📸 <b>•</b> Send any photo to set it as your thumbnail.  
-🗑️ <b>•</b> Use /del_thumb to delete your current thumbnail.  
-👁️ <b>•</b> Use /view_thumb to view your current thumbnail."""
-    
-    CAPTION= """📑 <b><u>How to Set Custom Caption</u></b>  
+<b>Tier ·  Duration ·  Price</b>
+🥉  <b>Bronze</b>    ·  3 Days    ·  30
+🥈  <b>Silver</b>    ·  7 Days    ·  70
+🥇  <b>Gold</b>      ·  15 Days   ·  150
+🏆  <b>Platinum</b>  ·  1 Month   ·  300
+💠  <b>Diamond</b>   ·  2 Months  ·  600
 
-✏️ <b>•</b> <code>/set_caption</code> – Set your custom caption.  
-👁️ <b>•</b> <code>/see_caption</code> – View your current caption.  
-🗑️ <b>•</b> <code>/del_caption</code> – Delete your custom caption.  
+<b>✨ Every tier unlocks:</b>
+›  ♾ Unlimited daily uploads
+›  ⚡ Priority processing
+›  🎁 10% off all plans"""
 
-<b>📌 Example:</b>  
-<code>/set_caption  
-📕 FILE NAME: {filename}  
-💾 SIZE: {filesize}  
-⏰ DURATION: {duration}</code>"""
-    
-    BOT_STATUS = """⚡️ <b>Bot Status</b> ⚡️
+    UPGRADE_PLAN = """<b>💎 ᴛʀɪɴɪᴛʏ ᴘʀᴇᴍɪᴜᴍ ᴘʟᴀɴs</b>
 
-⌚️ <b>Uptime:</b> `{}`
-👥 <b>Total Users:</b> `{}`
-💎 <b>Premium Users:</b> `{}`
-⬆️ <b>Upload Speed:</b> `{}`
-⬇️ <b>Download Speed:</b> `{}`
-"""
-    LIVE_STATUS = """⚡ <b>LIVE SERVER STATUS</b> ⚡
+🔹 <b>Pro</b>
+   ⏳ 1 Month  ·  💸 150  ·  📦 100 GB / day
 
-⌚️ <b>Uptime:</b> `{}`
-🖥️ <b>CPU Usage:</b> `{}%`
-💾 <b>RAM Usage:</b> `{}%`
-🗄️ <b>Total Disk:</b> `{}`
-📂 <b>Used Space:</b> `{} ({}%)`
-📤 <b>Free Space:</b> `{}`
-⬆️ <b>Upload Speed:</b> `{}`
-⬇️ <b>Download Speed:</b> `{}`
-🔖 <b>Version:</b> V3.0.0 [STABLE]
-"""
-    DIGITAL_METADATA = """❪ <b>SET CUSTOM METADATA</b> ❫
+🔸 <b>Ultra Pro</b>
+   ⏳ 1 Month  ·  💸 300  ·  📦 1000 GB / day
 
-🔹 <b>Command:</b> /metadata  
-Use this to set or change your custom metadata easily.
+<b>✨ Bonus:</b> 10% off when you renew early."""
 
-💡 <b>Examples:</b>
-`--change-title @trinityXmods`  
-`--change-video-title @trinityXmods`  
-`--change-audio-title @trinityXmods`  
-`--change-subtitle-title @trinityXmods`  
-`--change-author @trinityXmods`
+    THUMBNAIL = """<b>🖼 ᴄᴜsᴛᴏᴍ ᴛʜᴜᴍʙɴᴀɪʟ</b>
 
-📥 For help, join the group: <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a>
-"""
-    
-    CUSTOM_FILE_NAME = """<u>🖋️ Custom File Name</u>
+›  📸  Send any photo — I'll save it as your thumbnail.
+›  👁  /view_thumb — preview the saved one.
+›  🗑  /del_thumb — remove it.
 
-You can pre-add a prefix or suffix along with your new filename.
+<i>Your thumbnail is applied automatically to every rename.</i>"""
 
-➢ /set_prefix - Add a prefix to your filename  
-➢ /see_prefix - View your current prefix  
-➢ /del_prefix - Delete your prefix  
+    CAPTION = """<b>📝 ᴄᴜsᴛᴏᴍ ᴄᴀᴘᴛɪᴏɴ</b>
 
-➢ /set_suffix - Add a suffix to your filename  
-➢ /see_suffix - View your current suffix  
-➢ /del_suffix - Delete your suffix  
+›  ✏️  /set_caption — set your caption
+›  👁  /see_caption — view it
+›  🗑  /del_caption — delete it
 
-💡 Examples:  
-`/set_prefix @trinityXmods`  
-`/set_suffix @trinityXmods`  
+<b>Available variables:</b>
+<code>{filename}</code> · <code>{filesize}</code> · <code>{duration}</code>
 
-📥 For help, join: <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a>
-"""
+<b>Example:</b>
+<code>/set_caption
+📕 {filename}
+💾 {filesize}
+⏱ {duration}</code>"""
 
-    DEV_TXT = """<b><u>Special Thanks & Developers</u></b>
+    BOT_STATUS = """<b>⚡ ᴛʀɪɴɪᴛʏ · ʙᴏᴛ sᴛᴀᴛᴜs</b>
 
-• ❣️ <b>Updates Here</b>: @trinityXmods
+<b>⌚ Uptime        :</b> <code>{}</code>
+<b>👥 Total Users   :</b> <code>{}</code>
+<b>💎 Premium Users :</b> <code>{}</code>
+<b>📤 Uploaded      :</b> <code>{}</code>
+<b>📥 Downloaded    :</b> <code>{}</code>"""
 
-The source code will be made available soon on our official channels:
+    LIVE_STATUS = """<b>📡 ᴛʀɪɴɪᴛʏ · ʟɪᴠᴇ sᴇʀᴠᴇʀ</b>
 
-📢 Telegram: <a href="https://t.me/trinityXmods">Trinity Mods</a>  
-💻 GitHub: <a href="https://github.com/Trinity-Mods">Trinity-Mods</a>
-"""
+<b>⌚ Uptime    :</b> <code>{}</code>
+<b>🧠 CPU       :</b> <code>{}%</code>
+<b>💾 RAM       :</b> <code>{}%</code>
+<b>🗄 Disk      :</b> <code>{}</code>
+<b>📂 Used      :</b> <code>{} ({}%)</code>
+<b>📤 Free      :</b> <code>{}</code>
+<b>⬆️ Upload    :</b> <code>{}</code>
+<b>⬇️ Download  :</b> <code>{}</code>
+<b>🔖 Version   :</b> <code>{}</code>"""
 
-    SEND_METADATA = """❪ <b>SET CUSTOM METADATA</b> ❫
+    METADATA_INFO = """<b>🧬 ᴄᴜsᴛᴏᴍ ᴍᴇᴛᴀᴅᴀᴛᴀ</b>
 
-💡 <b>Examples:</b>
-`--change-title @trinityXmods`  
-`--change-video-title @trinityXmods`  
-`--change-audio-title @trinityXmods`  
-`--change-subtitle-title @trinityXmods`  
-`--change-author @trinityXmods`
+Use /metadata to toggle on/off and set your code.
 
-📥 For help, join: <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Mods Support</a>
-"""
-    
-    RKN_PROGRESS = """<b>
-{0}
-❁ 🗃️ Size  : {1} | {2}
-❁ ⏳ Done  : {3}%
-❁ 🚀 Speed : {4}/s
-❁ ⏰ ETA   : {5}</b>"""
+<b>Supported flags:</b>
+<code>--change-title @trinityXmods</code>
+<code>--change-video-title @trinityXmods</code>
+<code>--change-audio-title @trinityXmods</code>
+<code>--change-subtitle-title @trinityXmods</code>
+<code>--change-author @trinityXmods</code>
+
+<i>Stuck?</i> Join <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Support</a> 💬"""
+
+    SEND_METADATA = """<b>🧬 sᴇɴᴅ ʏᴏᴜʀ ᴍᴇᴛᴀᴅᴀᴛᴀ ᴄᴏᴅᴇ</b>
+
+Paste any of the flags below (one per line):
+<code>--change-title @trinityXmods</code>
+<code>--change-video-title @trinityXmods</code>
+<code>--change-audio-title @trinityXmods</code>
+<code>--change-subtitle-title @trinityXmods</code>
+<code>--change-author @trinityXmods</code>"""
+
+    CUSTOM_FILE_NAME = """<b>🏷 ᴘʀᴇғɪx & sᴜғғɪx</b>
+
+Automatically wrap every renamed file with your own tag.
+
+<b>Prefix</b>
+›  /set_prefix · /see_prefix · /del_prefix
+
+<b>Suffix</b>
+›  /set_suffix · /see_suffix · /del_suffix
+
+<b>Example:</b>
+<code>/set_prefix @trinityXmods</code>
+<code>/set_suffix [TrinityMods]</code>"""
+
+    DEV_TXT = """<b>💠 ᴛʀɪɴɪᴛʏ ᴍᴏᴅs</b>
+
+Crafted with care by the Trinity Mods team.
+
+›  📢  <b>Updates :</b> <a href="https://t.me/trinityXmods">@trinityXmods</a>
+›  💬  <b>Support :</b> <a href="https://t.me/+iV0nZk2DK9w0MDA1">Trinity Support</a>
+›  💻  <b>GitHub  :</b> <a href="https://github.com/Trinity-Mods">Trinity-Mods</a>
+
+<i>Stay tuned for more powerful tools.</i>"""
+
+    # Modern bordered progress card.
+    # Slots: 0=action title, 1=bar, 2=current, 3=total, 4=percent, 5=speed, 6=eta
+    PROGRESS_BAR = """<b>{0}</b>
+
+<b>╭━━━━━━━━━━━━━━━━━━━➣</b>
+<b>┃ {1}</b>
+<b>┃ 📦 {2}  of  {3}</b>
+<b>┃ ⚡ {4}%</b>
+<b>┃ 🚀 {5}/s</b>
+<b>┃ ⏱ {6}</b>
+<b>╰━━━━━━━━━━━━━━━━━━━➣</b>"""
