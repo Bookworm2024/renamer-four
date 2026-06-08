@@ -9,16 +9,23 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 # Time-throttled instead of per-chunk → far fewer edit calls → fewer flood-waits → faster transfers.
 PROGRESS_REFRESH = 6.0
 
+# Tracks the last edit time per message without mutating Pyrogram objects.
+_progress_last = {}
+
 
 async def progress_for_pyrogram(current, total, ud_type, message, start):
     now = time.time()
     diff = now - start
 
     # Refresh only every PROGRESS_REFRESH seconds, or on the final chunk.
-    last = getattr(message, "_trinity_last_edit", 0)
+    key = (message.chat.id, message.id)
+    last = _progress_last.get(key, 0)
     if (now - last) < PROGRESS_REFRESH and current != total:
         return
-    setattr(message, "_trinity_last_edit", now)
+    if current == total:
+        _progress_last.pop(key, None)
+    else:
+        _progress_last[key] = now
 
     percentage = current * 100 / total if total else 0
     speed = current / diff if diff > 0 else 0
