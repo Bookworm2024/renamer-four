@@ -1,4 +1,5 @@
 # imports
+import html
 from pyrogram import Client, filters
 from helper.database import digital_botz
 
@@ -33,7 +34,7 @@ async def see_prefix(client, message):
     wait = await message.reply_text("<b>⏳ Please wait…</b>", reply_to_message_id=message.id)
     prefix = await digital_botz.get_prefix(message.from_user.id)
     if prefix:
-        await wait.edit(f"<b>🏷 Your prefix:</b>\n\n<code>{prefix}</code>")
+        await wait.edit(f"<b>🏷 Your prefix:</b>\n\n<code>{html.escape(prefix)}</code>")
     else:
         await wait.edit("<b>😶 You don't have a prefix set.</b>")
 
@@ -68,6 +69,6 @@ async def see_suffix(client, message):
     wait = await message.reply_text("<b>⏳ Please wait…</b>", reply_to_message_id=message.id)
     suffix = await digital_botz.get_suffix(message.from_user.id)
     if suffix:
-        await wait.edit(f"<b>🏷 Your suffix:</b>\n\n<code>{suffix}</code>")
+        await wait.edit(f"<b>🏷 Your suffix:</b>\n\n<code>{html.escape(suffix)}</code>")
     else:
         await wait.edit("<b>😶 You don't have a suffix set.</b>")
