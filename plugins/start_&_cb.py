@@ -1,282 +1,355 @@
 # extra imports
-import random, asyncio, datetime, pytz, time, psutil, shutil
+import asyncio, datetime, time, psutil, shutil
 
 # pyrogram imports
 from pyrogram import Client, filters
-from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, ForceReply, CallbackQuery
+from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup, CallbackQuery
 
 # bots imports
 from helper.database import digital_botz
-from config import Config, rkn
+from config import Config, Txt, VERSION, OWNER_ID
 from helper.utils import humanbytes
-from plugins import __version__ as _bot_version_, __developer__, __database__, __library__, __language__, __programer__
-
-upgrade_button = InlineKeyboardMarkup([[        
-        InlineKeyboardButton('buy premium ✓', user_id=int(6011680723)),
-         ],[
-        InlineKeyboardButton("Back", callback_data = "start")
-]])
-
-upgrade_trial_button = InlineKeyboardMarkup([[        
-        InlineKeyboardButton('buy premium ✓', user_id=int(6011680723)),
-         ],[
-        InlineKeyboardButton("Trial - 12 Hours ✓", callback_data = "give_trial"),
-        InlineKeyboardButton("Back", callback_data = "start")
-]])
+from plugins import (
+    __version__ as _bot_version_, __developer__, __database__,
+    __library__, __language__, __programer__,
+)
 
 
-        
+# ── Reusable keyboards ──────────────────────────────────────────
+
+def start_keyboard(premium: bool):
+    kb = [
+        [
+            InlineKeyboardButton('📢 Updates', url='https://t.me/trinityXmods'),
+            InlineKeyboardButton('💬 Support', url='https://t.me/+iV0nZk2DK9w0MDA1'),
+        ],
+        [
+            InlineKeyboardButton('ℹ️ About', callback_data='about'),
+            InlineKeyboardButton('📖 Help', callback_data='help'),
+        ],
+    ]
+    if premium:
+        kb.append([InlineKeyboardButton('💎 Go Premium', callback_data='upgrade')])
+    return InlineKeyboardMarkup(kb)
+
+
+upgrade_button = InlineKeyboardMarkup([
+    [InlineKeyboardButton('💎 Buy Premium', user_id=OWNER_ID)],
+    [InlineKeyboardButton('◀️ Back', callback_data="start")],
+])
+
+upgrade_trial_button = InlineKeyboardMarkup([
+    [InlineKeyboardButton('💎 Buy Premium', user_id=OWNER_ID)],
+    [
+        InlineKeyboardButton("🎁 Free Trial · 12h", callback_data="give_trial"),
+        InlineKeyboardButton("◀️ Back", callback_data="start"),
+    ],
+])
+
+
+# ── /start ──────────────────────────────────────────────────────
+
 @Client.on_message(filters.private & filters.command("start"))
 async def start(client, message):
-    start_button = [[        
-        InlineKeyboardButton('Updates', url='https://t.me/trinityXmods'),
-        InlineKeyboardButton('Support', url='https://t.me/+iV0nZk2DK9w0MDA1')
-        ],[
-        InlineKeyboardButton('About', callback_data='about'),
-        InlineKeyboardButton('Help', callback_data='help')
-         ]]
-        
-    if client.premium:
-        start_button.append([InlineKeyboardButton('💸 Upgrade To Premium 💸', callback_data='upgrade')])
-            
     user = message.from_user
-    await digital_botz.add_user(client, message) 
+    await digital_botz.add_user(client, message)
+    kb = start_keyboard(client.premium)
     if Config.START_PIC:
-        await message.reply_photo(Config.START_PIC, caption=rkn.START_TXT.format(user.mention), reply_markup=InlineKeyboardMarkup(start_button))
+        await message.reply_photo(
+            Config.START_PIC,
+            caption=Txt.START_TXT.format(user.mention),
+            reply_markup=kb,
+        )
     else:
-        await message.reply_text(text=rkn.START_TXT.format(user.mention), reply_markup=InlineKeyboardMarkup(start_button), disable_web_page_preview=True)
+        await message.reply_text(
+            text=Txt.START_TXT.format(user.mention),
+            reply_markup=kb,
+            disable_web_page_preview=True,
+        )
 
+
+# ── /id & /ping (quick utilities) ───────────────────────────────
+
+@Client.on_message(filters.private & filters.command("id"))
+async def get_id(client, message):
+    uid = message.from_user.id
+    reply = message.reply_to_message
+    text = f"<b>🆔 Your ID:</b> <code>{uid}</code>"
+    if reply and reply.from_user:
+        text += f"\n<b>👤 Replied User ID:</b> <code>{reply.from_user.id}</code>"
+    await message.reply_text(text, quote=True)
+
+
+@Client.on_message(filters.private & filters.command("ping"))
+async def ping(client, message):
+    start_t = time.time()
+    msg = await message.reply_text("🏓 Pinging…")
+    delta = (time.time() - start_t) * 1000
+    await msg.edit(f"🏓 <b>Pong!</b>  <code>{delta:.0f} ms</code>")
+
+
+# ── /myplan ─────────────────────────────────────────────────────
 
 @Client.on_message(filters.private & filters.command("myplan"))
 async def myplan(client, message):
     if not client.premium:
-        return # premium mode disabled ✓
+        return
 
     user_id = message.from_user.id
     user = message.from_user.mention
-    
+
     if await digital_botz.has_premium_access(user_id):
         data = await digital_botz.get_user(user_id)
-        expiry_str_in_ist = data.get("expiry_time")
-        time_left_str = expiry_str_in_ist - datetime.datetime.now()
+        expiry = data.get("expiry_time")
+        time_left = expiry - datetime.datetime.now()
 
-        text = f"USER :- {user}\nUSER ID :- <code>{user_id}</code>\n"
+        text = (
+            f"<b>💎 ᴛʀɪɴɪᴛʏ ᴘʀᴇᴍɪᴜᴍ</b>\n\n"
+            f"<b>👤 User :</b> {user}\n"
+            f"<b>🆔 ID   :</b> <code>{user_id}</code>\n"
+        )
 
         if client.uploadlimit:
-            await digital_botz.reset_uploadlimit_access(user_id)                
-            user_data = await digital_botz.get_user_data(user_id)
-            limit = user_data.get('uploadlimit', 0)
-            used = user_data.get('used_limit', 0)
+            await digital_botz.reset_uploadlimit_access(user_id)
+            ud = await digital_botz.get_user_data(user_id)
+            limit = ud.get('uploadlimit', 0)
+            used = ud.get('used_limit', 0)
             remain = int(limit) - int(used)
-            type = user_data.get('usertype', "Free")
+            ptype = ud.get('usertype', "Free")
+            text += (
+                f"<b>🏷 Plan :</b> <code>{ptype}</code>\n"
+                f"<b>📦 Daily Limit :</b> <code>{humanbytes(limit)}</code>\n"
+                f"<b>📤 Used Today  :</b> <code>{humanbytes(used)}</code>\n"
+                f"<b>♻️ Remaining   :</b> <code>{humanbytes(remain)}</code>\n"
+            )
 
-            text += f"Plan :- `{type}`\nDaily Upload Limit :- `{humanbytes(limit)}`\nToday Used :- `{humanbytes(used)}`\nRemain :- `{humanbytes(remain)}`\n"
-
-        text += f"Time Left : {time_left_str}\nExpire Date : {expiry_str_in_ist}"
-
+        text += (
+            f"<b>⏳ Time Left :</b> <code>{str(time_left).split('.')[0]}</code>\n"
+            f"<b>📅 Expires   :</b> <code>{expiry.strftime('%d %b %Y, %I:%M %p')}</code>"
+        )
         await message.reply_text(text, quote=True)
+        return
 
+    # Non-premium
+    if client.uploadlimit:
+        ud = await digital_botz.get_user_data(user_id)
+        limit = ud.get('uploadlimit', 0)
+        used = ud.get('used_limit', 0)
+        remain = int(limit) - int(used)
+        ptype = ud.get('usertype', "Free")
+        text = (
+            f"<b>🆓 ʏᴏᴜʀ ᴘʟᴀɴ</b>\n\n"
+            f"<b>👤 User :</b> {user}\n"
+            f"<b>🆔 ID   :</b> <code>{user_id}</code>\n"
+            f"<b>🏷 Plan :</b> <code>{ptype}</code>\n"
+            f"<b>📦 Daily Limit :</b> <code>{humanbytes(limit)}</code>\n"
+            f"<b>📤 Used Today  :</b> <code>{humanbytes(used)}</code>\n"
+            f"<b>♻️ Remaining   :</b> <code>{humanbytes(remain)}</code>\n"
+            f"<b>📅 Expires :</b> <code>Lifetime (Free)</code>\n\n"
+            f"<i>Want more power? Tap below 👇</i>"
+        )
+        await message.reply_text(
+            text,
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton("💎 View Premium Plans", callback_data='upgrade')]]
+            ),
+            quote=True,
+        )
     else:
-        if client.uploadlimit:
-            user_data = await digital_botz.get_user_data(user_id)
-            limit = user_data.get('uploadlimit', 0)
-            used = user_data.get('used_limit', 0)
-            remain = int(limit) - int(used)
-            type = user_data.get('usertype', "Free")
+        await message.reply_text(
+            f"<b>Hey {user},</b>\n\nYou don't have an active premium plan yet. "
+            f"Tap below to unlock unlimited power 👇",
+            reply_markup=InlineKeyboardMarkup(
+                [[InlineKeyboardButton("💎 View Premium Plans", callback_data='upgrade')]]
+            ),
+        )
 
-            text = f"USER :- {user}\nUSER ID :- <code>{user_id}</code>\nPlan :- `{type}`\nDaily Upload Limit :- `{humanbytes(limit)}`\nToday Used :- `{humanbytes(used)}`\nRemain :- `{humanbytes(remain)}`\nExpire Date :- Lifetime\n\nIf You Want TO Take Premium Then Click On Below Button 👇"
 
-            await message.reply_text(text, reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Checkout Premium Plans 💸", callback_data='upgrade')]]), quote=True)
-
-        else:
-            m=await message.reply_sticker("CAACAgIAAxkBAAK3BmjJhKxZw7k69gqfgtx3OnnGF1DQAAJIAANSiZEjbtkuqJw9TwABNgQ")
-            await message.reply_text(f"Hey {user},\n\nYou Do Not Have Any Active Premium Plan, If You Want TO Take Premium Then Click On Below Button 👇",
-            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("💸 Checkout Premium Plans 💸", callback_data='upgrade')]]))
-            await asyncio.sleep(2)
-            await m.delete()
+# ── /plans ──────────────────────────────────────────────────────
 
 @Client.on_message(filters.private & filters.command("plans"))
 async def plans(client, message):
     if not client.premium:
-        return # premium mode disabled ✓
+        return
 
     user = message.from_user
-    upgrade_msg = rkn.UPGRADE_PLAN.format(user.mention) if client.uploadlimit else rkn.UPGRADE_PREMIUM.format(user.mention)
-    
+    msg = Txt.UPGRADE_PLAN if client.uploadlimit else Txt.UPGRADE_PREMIUM
+
     free_trial_status = await digital_botz.get_free_trial_status(user.id)
-    if not await digital_botz.has_premium_access(user.id):
-        if not free_trial_status:
-            await message.reply_text(text=upgrade_msg, reply_markup=upgrade_trial_button, disable_web_page_preview=True)
-        else:
-            await message.reply_text(text=upgrade_msg, reply_markup=upgrade_button, disable_web_page_preview=True)
+    if not await digital_botz.has_premium_access(user.id) and not free_trial_status:
+        kb = upgrade_trial_button
     else:
-        await message.reply_text(text=upgrade_msg, reply_markup=upgrade_button, disable_web_page_preview=True)
-   
-  
+        kb = upgrade_button
+    await message.reply_text(text=msg, reply_markup=kb, disable_web_page_preview=True)
+
+
+# ── Callback router ─────────────────────────────────────────────
+
 @Client.on_callback_query()
 async def cb_handler(client, query: CallbackQuery):
-    data = query.data 
+    data = query.data
+
     if data == "start":
-        start_button = [[        
-        InlineKeyboardButton('Updates', url='https://t.me/trinityXmods'),
-        InlineKeyboardButton('Support', url='https://t.me/+iV0nZk2DK9w0MDA1')
-        ],[
-        InlineKeyboardButton('About', callback_data='about'),
-        InlineKeyboardButton('Help', callback_data='help')
-         ]]
-            
-        if client.premium:
-            start_button.append([InlineKeyboardButton('💸 Upgrade To Premium 💸', callback_data='upgrade')])
-            
         await query.message.edit_text(
-            text=rkn.START_TXT.format(query.from_user.mention),
+            text=Txt.START_TXT.format(query.from_user.mention),
             disable_web_page_preview=True,
-            reply_markup = InlineKeyboardMarkup(start_button))
-        
+            reply_markup=start_keyboard(client.premium),
+        )
+
     elif data == "help":
         await query.message.edit_text(
-            text=rkn.HELP_TXT,
+            text=Txt.HELP_TXT,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-                #⚠️ don't change source code & source link ⚠️ #
-                InlineKeyboardButton("Thumbnail", callback_data = "thumbnail"),
-                InlineKeyboardButton("Caption", callback_data = "caption")
-                ],[          
-                InlineKeyboardButton("Custom File Name", callback_data = "custom_file_name")
-                ],[          
-                InlineKeyboardButton("About", callback_data = "about"),
-                InlineKeyboardButton("METADATA", callback_data = "digital_meta_data")
-                                     ],[
-                InlineKeyboardButton("Back", callback_data = "start")
-                  ]]))         
-        
+            reply_markup=InlineKeyboardMarkup([
+                [
+                    InlineKeyboardButton("🖼 Thumbnail", callback_data="thumbnail"),
+                    InlineKeyboardButton("📝 Caption", callback_data="caption"),
+                ],
+                [
+                    InlineKeyboardButton("🏷 Prefix / Suffix", callback_data="custom_file_name"),
+                    InlineKeyboardButton("🧬 Metadata", callback_data="digital_meta_data"),
+                ],
+                [
+                    InlineKeyboardButton("ℹ️ About", callback_data="about"),
+                    InlineKeyboardButton("◀️ Back", callback_data="start"),
+                ],
+            ]),
+        )
+
     elif data == "about":
-        about_button = [[
-         #⚠️ don't change source code & source link ⚠️ #
-        InlineKeyboardButton("Source", callback_data = "source_code"), #Whoever is deploying this repo is given a warning ⚠️ not to remove this repo link #first & last warning ⚠️
-        InlineKeyboardButton("Bot Status", callback_data = "bot_status")
-        ],[
-        InlineKeyboardButton("Live Status", callback_data = "live_status")
-        ]]
+        about_button = [
+            [
+                InlineKeyboardButton("👨‍💻 Developers", callback_data="source_code"),
+                InlineKeyboardButton("📊 Bot Status", callback_data="bot_status"),
+            ],
+            [InlineKeyboardButton("📡 Live Status", callback_data="live_status")],
+        ]
         if client.premium:
-            about_button[-1].append(InlineKeyboardButton("Upgrade", callback_data = "upgrade"))
-            about_button.append([InlineKeyboardButton("Back", callback_data = "start")])
-        else:
-            about_button[-1].append(InlineKeyboardButton("Back", callback_data = "start"))
-            
+            about_button[-1].append(InlineKeyboardButton("💎 Premium", callback_data="upgrade"))
+        about_button.append([InlineKeyboardButton("◀️ Back", callback_data="start")])
+
         await query.message.edit_text(
-            text=rkn.ABOUT_TXT.format(client.mention, __developer__, __programer__, __library__, __language__, __database__, _bot_version_),
-            disable_web_page_preview = True,
-            reply_markup=InlineKeyboardMarkup(about_button))    
-        
+            text=Txt.ABOUT_TXT.format(
+                client.mention, __programer__, __developer__,
+                __library__, __language__, __database__, _bot_version_,
+            ),
+            disable_web_page_preview=True,
+            reply_markup=InlineKeyboardMarkup(about_button),
+        )
+
     elif data == "upgrade":
         if not client.premium:
             return await query.message.delete()
-                
-        user = query.from_user
-        upgrade_msg = rkn.UPGRADE_PLAN.format(user.mention) if client.uploadlimit else rkn.UPGRADE_PREMIUM.format(user.mention)
-    
+        msg = Txt.UPGRADE_PLAN if client.uploadlimit else Txt.UPGRADE_PREMIUM
         free_trial_status = await digital_botz.get_free_trial_status(query.from_user.id)
-        if not await digital_botz.has_premium_access(query.from_user.id):
-            if not free_trial_status:
-                await query.message.edit_text(text=upgrade_msg, disable_web_page_preview=True, reply_markup=upgrade_trial_button)   
-            else:
-                await query.message.edit_text(text=upgrade_msg, disable_web_page_preview=True, reply_markup=upgrade_button)
+        if not await digital_botz.has_premium_access(query.from_user.id) and not free_trial_status:
+            kb = upgrade_trial_button
         else:
-            await query.message.edit_text(text=upgrade_msg, disable_web_page_preview=True, reply_markup=upgrade_button)
-           
+            kb = upgrade_button
+        await query.message.edit_text(text=msg, disable_web_page_preview=True, reply_markup=kb)
+
     elif data == "give_trial":
         if not client.premium:
             return await query.message.delete()
-                
         await query.message.delete()
         free_trial_status = await digital_botz.get_free_trial_status(query.from_user.id)
-        if not free_trial_status:            
+        if not free_trial_status:
             await digital_botz.give_free_trail(query.from_user.id)
-            new_text = "**Your Premiun Trial Has Added For 12 Hours.\n\nYou Can Use Free Trial 12 Hours From Now 😀\n\nआप अब से 𝟷𝟸 घण्टा के लिए निःशुल्क ट्रायल का उपयोग कर सकते हैं 😀**"
+            new_text = (
+                "<b>🎁 Trial Activated!</b>\n\n"
+                "Your <b>12-hour premium trial</b> is now live. "
+                "Enjoy unlimited renaming — go send a file! 🚀"
+            )
         else:
-            new_text = "**🤣 You Already Used Free Now No More Free Trial. Please Buy Subscription Here Are Our 👉 /plans**"
+            new_text = (
+                "<b>⚠️ Trial Already Used</b>\n\n"
+                "You've already claimed your free trial. "
+                "Check out our plans → /plans"
+            )
         await client.send_message(query.from_user.id, text=new_text)
 
     elif data == "thumbnail":
         await query.message.edit_text(
-            text=rkn.THUMBNAIL,
+            text=Txt.THUMBNAIL,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-             InlineKeyboardButton(" Back", callback_data = "help")]]))
-      
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("◀️ Back", callback_data="help")]]),
+        )
+
     elif data == "caption":
         await query.message.edit_text(
-            text=rkn.CAPTION,
+            text=Txt.CAPTION,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-             InlineKeyboardButton(" Back", callback_data = "help")]]))
-      
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("◀️ Back", callback_data="help")]]),
+        )
+
     elif data == "custom_file_name":
         await query.message.edit_text(
-            text=rkn.CUSTOM_FILE_NAME,
+            text=Txt.CUSTOM_FILE_NAME,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-             InlineKeyboardButton(" Back", callback_data = "help")]]))
-      
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("◀️ Back", callback_data="help")]]),
+        )
+
     elif data == "digital_meta_data":
         await query.message.edit_text(
-            text=rkn.DIGITAL_METADATA,
+            text=Txt.METADATA_INFO,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-             InlineKeyboardButton(" Back", callback_data = "help")]]))
-      
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("◀️ Back", callback_data="help")]]),
+        )
+
     elif data == "bot_status":
         total_users = await digital_botz.total_users_count()
         if client.premium:
             total_premium_users = await digital_botz.total_premium_users_count()
         else:
             total_premium_users = "Disabled ✅"
-        
-        uptime = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - client.uptime))    
+        uptime = time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - client.uptime))
         sent = humanbytes(psutil.net_io_counters().bytes_sent)
         recv = humanbytes(psutil.net_io_counters().bytes_recv)
         await query.message.edit_text(
-            text=rkn.BOT_STATUS.format(uptime, total_users, total_premium_users, sent, recv),
+            text=Txt.BOT_STATUS.format(uptime, total_users, total_premium_users, sent, recv),
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-             InlineKeyboardButton(" Back", callback_data = "about")]]))
-      
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("◀️ Back", callback_data="about")]]),
+        )
+
     elif data == "live_status":
-        currentTime = time.strftime("%Hh%Mm%Ss", time.gmtime(time.time() - client.uptime))    
+        currentTime = time.strftime("%Hh %Mm %Ss", time.gmtime(time.time() - client.uptime))
         total, used, free = shutil.disk_usage(".")
-        total = humanbytes(total)
-        used = humanbytes(used)
-        free = humanbytes(free)
         sent = humanbytes(psutil.net_io_counters().bytes_sent)
         recv = humanbytes(psutil.net_io_counters().bytes_recv)
         cpu_usage = psutil.cpu_percent()
         ram_usage = psutil.virtual_memory().percent
         disk_usage = psutil.disk_usage('/').percent
         await query.message.edit_text(
-            text=rkn.LIVE_STATUS.format(currentTime, cpu_usage, ram_usage, total, used, disk_usage, free, sent, recv),
+            text=Txt.LIVE_STATUS.format(
+                currentTime, cpu_usage, ram_usage,
+                humanbytes(total), humanbytes(used), disk_usage,
+                humanbytes(free), sent, recv, VERSION,
+            ),
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-             InlineKeyboardButton(" Back", callback_data = "about")]]))
-      
+            reply_markup=InlineKeyboardMarkup([[InlineKeyboardButton("◀️ Back", callback_data="about")]]),
+        )
+
     elif data == "source_code":
         await query.message.edit_text(
-            text=rkn.DEV_TXT,
+            text=Txt.DEV_TXT,
             disable_web_page_preview=True,
-            reply_markup=InlineKeyboardMarkup([[
-                #⚠️ don't change source code & source link ⚠️ #
-           #Whoever is deploying this repo is given a warning ⚠️ not to remove this repo link #first & last warning ⚠️   
-                InlineKeyboardButton("UPDATES 🥳", url="https://t.me/trinityXmods")
-            ],[
-                InlineKeyboardButton("🔒 Close", callback_data = "close"),
-                InlineKeyboardButton("◀️ Back", callback_data = "start")
-                 ]])          
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("📢 Updates", url="https://t.me/trinityXmods")],
+                [
+                    InlineKeyboardButton("🔒 Close", callback_data="close"),
+                    InlineKeyboardButton("◀️ Back", callback_data="start"),
+                ],
+            ]),
         )
+
     elif data == "close":
         try:
             await query.message.delete()
-            await query.message.reply_to_message.delete()
+            if query.message.reply_to_message:
+                await query.message.reply_to_message.delete()
+        except Exception:
+            pass
+        try:
             await query.message.continue_propagation()
-        except:
-            await query.message.delete()
-            await query.message.continue_propagation()
+        except Exception:
+            pass
