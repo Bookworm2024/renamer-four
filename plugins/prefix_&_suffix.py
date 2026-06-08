@@ -1,59 +1,73 @@
 # imports
-from pyrogram import Client, filters, enums
+from pyrogram import Client, filters
 from helper.database import digital_botz
 
-# prefix commond ✨
+
+# ── Prefix ───────────────────────────────────────────────────────
+
 @Client.on_message(filters.private & filters.command('set_prefix'))
 async def add_prefix(client, message):
     if len(message.command) == 1:
-        return await message.reply_text("**__Give The Prefix__\n\nExample:- `/set_prefix @trinityXmods`**")
+        return await message.reply_text(
+            "<b>🏷 Send a prefix with the command.</b>\n\n"
+            "<b>Example:</b> <code>/set_prefix @trinityXmods</code>"
+        )
     prefix = message.text.split(" ", 1)[1]
-    RknDev = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
+    wait = await message.reply_text("<b>⏳ Please wait…</b>", reply_to_message_id=message.id)
     await digital_botz.set_prefix(message.from_user.id, prefix)
-    await RknDev.edit("__**✅ Prefix Saved**__")
+    await wait.edit("<b>✅ Prefix saved.</b>")
+
 
 @Client.on_message(filters.private & filters.command('del_prefix'))
 async def delete_prefix(client, message):
-    RknDev = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
+    wait = await message.reply_text("<b>⏳ Please wait…</b>", reply_to_message_id=message.id)
     prefix = await digital_botz.get_prefix(message.from_user.id)
     if not prefix:
-        return await RknDev.edit("__**😔 You Don't Have Any Prefix**__")
+        return await wait.edit("<b>😶 You don't have a prefix set.</b>")
     await digital_botz.set_prefix(message.from_user.id, None)
-    await RknDev.edit("__**❌️ Prefix Deleted**__")
+    await wait.edit("<b>🗑 Prefix deleted.</b>")
+
 
 @Client.on_message(filters.private & filters.command('see_prefix'))
 async def see_prefix(client, message):
-    RknDev = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
+    wait = await message.reply_text("<b>⏳ Please wait…</b>", reply_to_message_id=message.id)
     prefix = await digital_botz.get_prefix(message.from_user.id)
     if prefix:
-        await RknDev.edit(f"**Your Prefix:-**\n\n`{prefix}`")
+        await wait.edit(f"<b>🏷 Your prefix:</b>\n\n<code>{prefix}</code>")
     else:
-        await RknDev.edit("__**😔 You Don't Have Any Prefix**__")
+        await wait.edit("<b>😶 You don't have a prefix set.</b>")
 
-# SUFFIX COMMOND ✨
+
+# ── Suffix ───────────────────────────────────────────────────────
+
 @Client.on_message(filters.private & filters.command('set_suffix'))
 async def add_suffix(client, message):
     if len(message.command) == 1:
-        return await message.reply_text("**__Give The Suffix__\n\nExᴀᴍᴩʟᴇ:- `/set_suffix @trinityXmods`**")
+        return await message.reply_text(
+            "<b>🏷 Send a suffix with the command.</b>\n\n"
+            "<b>Example:</b> <code>/set_suffix [TrinityMods]</code>"
+        )
     suffix = message.text.split(" ", 1)[1]
-    RknDev = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
+    wait = await message.reply_text("<b>⏳ Please wait…</b>", reply_to_message_id=message.id)
     await digital_botz.set_suffix(message.from_user.id, suffix)
-    await RknDev.edit("__**✅ Suffix Saved**__")
+    await wait.edit("<b>✅ Suffix saved.</b>")
+
 
 @Client.on_message(filters.private & filters.command('del_suffix'))
 async def delete_suffix(client, message):
-    RknDev = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
+    wait = await message.reply_text("<b>⏳ Please wait…</b>", reply_to_message_id=message.id)
     suffix = await digital_botz.get_suffix(message.from_user.id)
     if not suffix:
-        return await RknDev.edit("__**😔 You Don't Have Any Suffix**__")
+        return await wait.edit("<b>😶 You don't have a suffix set.</b>")
     await digital_botz.set_suffix(message.from_user.id, None)
-    await RknDev.edit("__**❌️ Suffix Deleted**__")
+    await wait.edit("<b>🗑 Suffix deleted.</b>")
+
 
 @Client.on_message(filters.private & filters.command('see_suffix'))
 async def see_suffix(client, message):
-    RknDev = await message.reply_text("Please Wait ...", reply_to_message_id=message.id)
+    wait = await message.reply_text("<b>⏳ Please wait…</b>", reply_to_message_id=message.id)
     suffix = await digital_botz.get_suffix(message.from_user.id)
     if suffix:
-        await RknDev.edit(f"**Your Suffix:-**\n\n`{suffix}`")
+        await wait.edit(f"<b>🏷 Your suffix:</b>\n\n<code>{suffix}</code>")
     else:
-        await RknDev.edit("__**😔 You Don't Have Any Suffix**__")
+        await wait.edit("<b>😶 You don't have a suffix set.</b>")
