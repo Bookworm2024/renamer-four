@@ -25,7 +25,7 @@ services:
         sync: false
       - key: DB_URL
         sync: false
-      - key: RKN_PIC
+      - key: START_PIC
         sync: false
       - key: ADMIN
         sync: false
