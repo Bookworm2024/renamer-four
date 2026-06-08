@@ -3,6 +3,7 @@ from pyrogram import Client, filters
 from pyrogram.types import Message, CallbackQuery, InlineKeyboardButton, InlineKeyboardMarkup
 
 # extra imports
+import html
 from helper.database import digital_botz
 from pyromod.exceptions import ListenerTimeout
 from config import Txt
@@ -30,7 +31,7 @@ async def handle_metadata(bot: Client, message: Message):
     bool_metadata = await digital_botz.get_metadata_mode(message.from_user.id)
     user_metadata = await digital_botz.get_metadata_code(message.from_user.id)
     await wait.edit(
-        f"<b>🧬 ʏᴏᴜʀ ᴄᴜʀʀᴇɴᴛ ᴍᴇᴛᴀᴅᴀᴛᴀ</b>\n\n<code>{user_metadata}</code>",
+        f"<b>🧬 ʏᴏᴜʀ ᴄᴜʀʀᴇɴᴛ ᴍᴇᴛᴀᴅᴀᴛᴀ</b>\n\n<code>{html.escape(str(user_metadata))}</code>",
         reply_markup=ON_KB if bool_metadata else OFF_KB,
     )
 
@@ -44,7 +45,7 @@ async def query_metadata(bot: Client, query: CallbackQuery):
         bool_meta = bool(int(_bool))
         await digital_botz.set_metadata_mode(query.from_user.id, bool_meta=not bool_meta)
         await query.message.edit(
-            f"<b>🧬 ʏᴏᴜʀ ᴄᴜʀʀᴇɴᴛ ᴍᴇᴛᴀᴅᴀᴛᴀ</b>\n\n<code>{user_metadata}</code>",
+            f"<b>🧬 ʏᴏᴜʀ ᴄᴜʀʀᴇɴᴛ ᴍᴇᴛᴀᴅᴀᴛᴀ</b>\n\n<code>{html.escape(str(user_metadata))}</code>",
             reply_markup=OFF_KB if bool_meta else ON_KB,
         )
 
