@@ -1,16 +1,24 @@
-import aiohttp, asyncio, warnings, pytz, datetime
+import aiohttp, asyncio, warnings, pytz, datetime, time
 import logging
-import logging.config
 import glob, sys, importlib.util
 from pathlib import Path
 
-# Faster event loop where available (Linux/macOS).
+# Faster event loop where available (Linux/macOS); falls back cleanly elsewhere.
 try:
     import uvloop
     uvloop.install()
     _LOOP = "uvloop"
 except Exception:
     _LOOP = "asyncio"
+
+# Pyrogram 2.x reads asyncio.get_event_loop() AT IMPORT TIME. Under uvloop's
+# policy (and on Python 3.12+) that won't auto-create a loop, which crashes the
+# import with "There is no current event loop". Create + set one up front so the
+# Pyrogram/pyromod imports below always find a valid loop.
+try:
+    asyncio.get_event_loop()
+except RuntimeError:
+    asyncio.set_event_loop(asyncio.new_event_loop())
 
 import pyromod  # noqa: F401
 
@@ -134,5 +142,5 @@ if __name__ == "__main__":
         main()
     except errors.FloodWait as ft:
         print(f"FloodWait — sleeping {ft.value}s")
-        asyncio.sleep(ft.value)
+        time.sleep(ft.value)
         main()
