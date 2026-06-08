@@ -1,25 +1,9 @@
 """
-Apache License 2.0
-Copyright (c) 2022 @Digital_Botz
+Trinity Mods · File Renamer
+Apache License 2.0 — Copyright (c) 2022-present Trinity Mods
 
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
-
-Telegram Link : https://t.me/GwitcherG
-Repo Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot
-License Link : https://github.com/Chamindu-Gayanuka/Digital-Rename-Bot/blob/main/LICENSE
+Telegram : https://t.me/trinityXmods
+GitHub   : https://github.com/Trinity-Mods
 """
 
 # database imports
@@ -49,7 +33,7 @@ class Database:
             uploadlimit=Config.FREE_UPLOAD_LIMIT,
             daily=0,
             metadata_mode=False,
-            metadata_code="--change-title @Unlimited_Movie_Zone\n--change-video-title @Unlimited_Movie_Zone\n--change-audio-title @Unlimited_Movie_Zone\n--change-subtitle-title @Unlimited_Movie_Zone\n--change-author @Unlimited_Movie_Zone",
+            metadata_code="--change-title @trinityXmods\n--change-video-title @trinityXmods\n--change-audio-title @trinityXmods\n--change-subtitle-title @trinityXmods\n--change-author @trinityXmods",
             expiry_time=None,
             has_free_trial=False,
             ban_status=dict(
