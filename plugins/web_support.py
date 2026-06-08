@@ -1,12 +1,19 @@
 from aiohttp import web
+from config import VERSION
 
-Rkn_FileRenameBot = web.RouteTableDef()
+trinity_routes = web.RouteTableDef()
 
-@Rkn_FileRenameBot.get("/", allow_head=True)
+
+@trinity_routes.get("/", allow_head=True)
 async def root_route_handler(request):
-    return web.json_response("Trinity File Renamer is Running!")
+    return web.json_response({
+        "status": "running",
+        "bot": "Trinity Mods · File Renamer",
+        "version": VERSION,
+    })
+
 
 async def web_server():
-    web_app = web.Application(client_max_size=30000000)
-    web_app.add_routes(Rkn_FileRenameBot)
+    web_app = web.Application(client_max_size=50 * 1024 * 1024)
+    web_app.add_routes(trinity_routes)
     return web_app
