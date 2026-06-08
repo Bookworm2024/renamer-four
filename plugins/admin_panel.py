@@ -2,7 +2,7 @@
 from config import Config, VERSION
 from helper.database import digital_botz
 from helper.utils import get_seconds, humanbytes
-import os, sys, time, asyncio, logging, datetime, pytz, traceback
+import os, sys, time, asyncio, logging, datetime, pytz, traceback, html
 
 # pyrogram imports
 from pyrogram.types import Message
@@ -234,22 +234,22 @@ async def ban(c: Client, m: Message):
         user_id = int(m.command[1])
         ban_duration = int(m.command[2])
         ban_reason = ' '.join(m.command[3:])
-        log_text = f"Banning {user_id} for {ban_duration} days — {ban_reason}."
+        log_text = f"Banning {user_id} for {ban_duration} days — {html.escape(ban_reason)}."
         try:
             await c.send_message(
                 user_id,
                 f"<b>🚫 You've been banned for {ban_duration} day(s).</b>\n"
-                f"<b>Reason:</b> <i>{ban_reason}</i>",
+                f"<b>Reason:</b> <i>{html.escape(ban_reason)}</i>",
             )
             log_text += '\n\nUser notified ✅'
         except Exception:
             traceback.print_exc()
-            log_text += f"\n\nNotify failed:\n<code>{traceback.format_exc()}</code>"
+            log_text += f"\n\nNotify failed:\n<code>{html.escape(traceback.format_exc())}</code>"
         await digital_botz.ban_user(user_id, ban_duration, ban_reason)
         await m.reply_text(log_text, quote=True)
     except Exception:
         traceback.print_exc()
-        await m.reply_text(f"<b>Error:</b>\n<code>{traceback.format_exc()}</code>", quote=True)
+        await m.reply_text(f"<b>Error:</b>\n<code>{html.escape(traceback.format_exc())}</code>", quote=True)
 
 
 @Client.on_message(filters.private & filters.command("unban") & filters.user(Config.ADMIN))
@@ -269,12 +269,12 @@ async def unban(c: Client, m: Message):
             log_text += '\n\nUser notified ✅'
         except Exception:
             traceback.print_exc()
-            log_text += f"\n\nNotify failed:\n<code>{traceback.format_exc()}</code>"
+            log_text += f"\n\nNotify failed:\n<code>{html.escape(traceback.format_exc())}</code>"
         await digital_botz.remove_ban(user_id)
         await m.reply_text(log_text, quote=True)
     except Exception:
         traceback.print_exc()
-        await m.reply_text(f"<b>Error:</b>\n<code>{traceback.format_exc()}</code>", quote=True)
+        await m.reply_text(f"<b>Error:</b>\n<code>{html.escape(traceback.format_exc())}</code>", quote=True)
 
 
 @Client.on_message(filters.private & filters.command("banned_users") & filters.user(Config.ADMIN))
@@ -290,7 +290,7 @@ async def _banned_users(_, m: Message):
         count += 1
         text += (
             f"• <b>ID:</b> <code>{user_id}</code> · <b>Days:</b> <code>{ban_duration}</code> · "
-            f"<b>On:</b> <code>{banned_on}</code> · <b>Reason:</b> <code>{ban_reason}</code>\n\n"
+            f"<b>On:</b> <code>{banned_on}</code> · <b>Reason:</b> <code>{html.escape(str(ban_reason))}</code>\n\n"
         )
     reply_text = f"<b>🚫 Banned users: {count}</b>\n\n{text}"
     if len(reply_text) > 4096:
